@@ -10,7 +10,6 @@ public class Item
     public string name;
     public string description;
     public Sprite itemSprite;
-    public int stack;
 
     public bool consumable;
     public bool healing;

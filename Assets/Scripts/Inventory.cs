@@ -18,6 +18,8 @@ public class Inventory : MonoBehaviour
 
     public Image[] slot;
     public Sprite[] slotSprite;
+    public Image[] qSlot;
+    public Sprite[] qSlotSprite;
 
     public TextMeshProUGUI[] stackText;
 
@@ -68,24 +70,59 @@ public class Inventory : MonoBehaviour
 
     public bool cook;
 
+    //Equip
+    public GameObject Axe, Pickaxe;
 
     // Start is called before the first frame update
     void Start()
-    {       
+    {
+        //testing
         //Cooking items in database
-        firstCookableItemId = 6;
-        lastCookableItemId = 6;
+        firstCookableItemId = 5;
+        lastCookableItemId = 5;
         //Crafting items in database
-        firstCraftableItemId = 7;
+        firstCraftableItemId = 6;
         lastCraftableItemId = 7;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if (qSlot[0].sprite != Database.itemList[0].itemSprite)
+            {
+                if (!Axe.activeSelf)
+                {
+                    Player.anim.SetBool("Unarm", false);
+                    Axe.SetActive(true);
+                }
+                else
+                {
+                    Player.anim.SetBool("Unarm", true);
+                    Axe.SetActive(false);
+                }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (qSlot[1].sprite != Database.itemList[0].itemSprite)
+            {
+                if (!Pickaxe.activeSelf)
+                {
+                    Player.anim.SetBool("Unarm", false);
+                    Pickaxe.SetActive(true);
+                }
+                else
+                {
+                    Player.anim.SetBool("Unarm", true);
+                    Pickaxe.SetActive(false);
+                }
+            }
+        }
         for (int i = 0; i < slotsNumber; i++)
         {
-            if (yourInventory[i].stack == 0)
+            if (slotStack[i] == 0)
             {
                 yourInventory[i] = Database.itemList[0];
             }
@@ -102,7 +139,7 @@ public class Inventory : MonoBehaviour
         }
 
         for (int i = 0; i < slotsNumber; i++)
-        {
+        {            
             if (yourInventory[i].id == 0)
             {
                 stackText[i].text = " ";
@@ -112,14 +149,40 @@ public class Inventory : MonoBehaviour
                 stackText[i].text = " " + slotStack[i];
             }
         }
+
         for (int i = 0; i < slotsNumber; i++)
         {
-            slot[i].sprite = slotSprite[i];
+            qSlotSprite[0] = Database.itemList[6].itemSprite;
+
+            if (yourInventory[i].id == 6)
+            {
+                qSlot[0].sprite = yourInventory[i].itemSprite;
+                break;
+            }
+            else if (i == slotsNumber)
+            {
+                qSlot[0].sprite = Database.itemList[0].itemSprite;
+            }
+        }
+        for (int i = 0; i < slotsNumber; i++)
+        {
+            qSlotSprite[1] = Database.itemList[7].itemSprite;
+            if (yourInventory[i].id == 7)
+            {
+                qSlot[1].sprite = yourInventory[i].itemSprite;
+                break;
+            }
+            else if (i == slotsNumber)
+            {
+                qSlot[1].sprite = Database.itemList[0].itemSprite;
+            }
         }
 
         for (int i = 0; i < slotsNumber; i++)
         {
+            slot[i].sprite = slotSprite[i];
             slotSprite[i] = yourInventory[i].itemSprite;
+
         }
 
         if (PickUp.y != null)
@@ -136,25 +199,27 @@ public class Inventory : MonoBehaviour
         {
             for (int i = 0; i < slotsNumber; i++)
             {
+                //ItemPickup:
+
                 if (yourInventory[i].id == n)
                 {
-                    if (slotStack[i] == maxStack)
+                    if (slotStack[i] >= maxStack)
                     {
                         continue;
                     }
                     else
                     {
-                        yourInventory[i].stack += 1;
+
+                        slotStack[i] += 1;
                         i = slotsNumber;
                         PickUp.pick = false;
-                    }
-                    
+                    }                                                       
                 }
             }
 
             for (int i = 0; i < slotsNumber; i++)
             {
-                if(yourInventory[i].id == 0 && PickUp.pick == true)
+                if (yourInventory[i].id == 0 && PickUp.pick == true)
                 {
                     yourInventory[i] = Database.itemList[n];
                     slotStack[i] += 1;
@@ -182,19 +247,40 @@ public class Inventory : MonoBehaviour
             canHeal = false;
         }
 
-        if (canConsume == true && Input.GetMouseButtonDown(1))
+        if (canConsume == true && Input.GetButtonDown("Fire1"))
         {
-            if (slotStack[b] == 1)
+            Debug.Log("EAT");
+            if (yourInventory[b] == Database.itemList[4])
             {
-                Player.Hunger += 25;
-                yourInventory[b] = Database.itemList[0];
-                slotStack[b] = 0;
+                if (slotStack[b] == 1)
+                {
+                    Player.Body -= 3;
+                    Player.Hunger += 25;
+                    yourInventory[b] = Database.itemList[0];
+                    slotStack[b] = 0;
+                }
+                else
+                {
+                    slotStack[b]--;
+                    Player.Body -= 3;
+                    Player.Hunger += 25;
+                }
             }
-            else
+            else if (yourInventory[b] == Database.itemList[5])
             {
-                slotStack[b]--;
-                Player.Hunger += 25;
+                if (slotStack[b] == 1)
+                {
+                    Player.Hunger += 25;
+                    yourInventory[b] = Database.itemList[0];
+                    slotStack[b] = 0;
+                }
+                else
+                {
+                    slotStack[b]--;
+                    Player.Hunger += 25;
+                }
             }
+            
         }
         else if (canConsume && canHeal && Input.GetMouseButtonDown(1))
         {
@@ -205,7 +291,7 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < slotsNumber; i++)
         {
-            stackText[i].text = "" + yourInventory[i].stack;
+            stackText[i].text = "" + slotStack[i];
         }
 
         //Crafting

@@ -19,13 +19,13 @@ public class Player : MonoBehaviour
     public bool Dead;
     public TextMeshProUGUI hpPenaltyBox;
     public FirstPersonController FPS;
-    public bool walk, run, unarm, axe, p_Axe;
-    public Animator anim;
-   
+    public bool walk, run, unarm, axe, p_Axe,attack;
+    public static Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
+        anim = transform.GetComponentInChildren<Animator>();
         Hunger = 200f;
         Thrist = 150f;
         Head = 20;
@@ -33,6 +33,13 @@ public class Player : MonoBehaviour
         Arm = 30;
         Legs = 30;
         headSlider.maxValue = 20;
+        headSlider.value = Head;
+        bodySlider.maxValue = 20;
+        bodySlider.value = Body;
+        legSlider.maxValue = 30;
+        legSlider.value = Legs;
+        armSlider.maxValue = 30;
+        armSlider.value = Arm;
         healthSlider.maxValue = maxHealth;
         healthSlider.value = maxHealth;
         thristSlider.maxValue = maxThrist;
@@ -75,6 +82,8 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("isGrounded", true);
         }
+        attack = Input.GetButtonDown("Fire1");
+        anim.SetBool("Attack", attack);
         UpdateHealth();
         HealthPenalty();
         //Health Controller
@@ -196,7 +205,7 @@ public class Player : MonoBehaviour
         if (Body <= 5)
         {
             HealthDecreaseRate = 2f;
-            HungerDecreaseRate = 8f;
+            HungerDecreaseRate = 10f;
         }
         else
         {
@@ -221,10 +230,10 @@ public class Player : MonoBehaviour
             Arm -= (Time.deltaTime / HealthDecreaseRate * 3);
             Legs -= (Time.deltaTime / HealthDecreaseRate * 3);
         }
-        if (Legs <= 10&&Legs>=1)
+        if ((Legs <= 10&&Legs>=1)||Hunger>=maxHunger)
         {
-            FPS.m_RunSpeed = 2;
-            FPS.m_WalkSpeed =4;
+            FPS.m_RunSpeed = 4;
+            FPS.m_WalkSpeed =2;
         }
         else if (Legs <= 0)
         {

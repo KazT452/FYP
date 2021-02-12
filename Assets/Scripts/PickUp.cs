@@ -26,29 +26,29 @@ public class PickUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 1f))
-        {
-            Debug.Log(hit.transform);
-            if (hit.collider.tag == "Item")
-            {
-                pickupBox.text = "Press E to pick up item";
-                Debug.Log(hit.transform.name);
+        //var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //RaycastHit hit;
+        //if (Physics.Raycast(ray, out hit, 1f))
+        //{
+        //    Debug.Log(hit.transform.name);
+        //    if (hit.collider.tag == "Item")
+        //    {
+        //        Debug.Log(hit.transform.name);
 
-            }
-        }
-        else
-        {
-            pickupBox.text = " ";
-        }
+        //    }
+        //}
+        //else
+        //{
+        //    pickupBox.text = " ";
+        //}
         if (canPickUp)
         {
+
             if (Input.GetKeyDown(KeyCode.E))
             {
+
                 Destroy(Item);
                 Item = null;
-                sticks += 1;
                 pick = true;
                 canPickUp = false;
 
@@ -58,10 +58,14 @@ public class PickUp : MonoBehaviour
         if (canPickUp)
         {
             pickUpText.SetActive(true);
+            pickupBox.text = "Press E to pick up item";
+
         }
         else
         {
             pickUpText.SetActive(false);
+            pickupBox.text = " ";
+
         }
 
     }

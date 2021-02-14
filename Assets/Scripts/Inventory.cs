@@ -80,9 +80,11 @@ public class Inventory : MonoBehaviour
         //Cooking items in database
         firstCookableItemId = 5;
         lastCookableItemId = 5;
+        cookableItemId = 5;
         //Crafting items in database
         firstCraftableItemId = 6;
         lastCraftableItemId = 7;
+        craftableItemId = 6;
     }
 
     // Update is called once per frame
@@ -633,7 +635,8 @@ public class Inventory : MonoBehaviour
 
         }
 
-    }public void cookItem()
+    }
+    public void cookItem()
     {
         int a = 0;
         int b = 0;

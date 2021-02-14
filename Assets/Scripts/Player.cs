@@ -232,8 +232,8 @@ public class Player : MonoBehaviour
         }
         if ((Legs <= 10&&Legs>=1)||Hunger>=maxHunger)
         {
-            FPS.m_RunSpeed = 4;
-            FPS.m_WalkSpeed =2;
+            FPS.m_RunSpeed = 8;
+            FPS.m_WalkSpeed =4;
         }
         else if (Legs <= 0)
         {
@@ -243,6 +243,8 @@ public class Player : MonoBehaviour
         }
         else
         {
+            FPS.m_RunSpeed = 20;
+            FPS.m_WalkSpeed = 10;
             hpPenaltyBox.text = " ";
 
         }

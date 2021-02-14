@@ -14,6 +14,10 @@ public class UIController : MonoBehaviour
     public GameObject Crafting;
     public bool craftingisClosed;
 
+    //Cooking
+    public GameObject Cooking;
+    public bool cookingisClosed;
+
     //Pause
     public bool pauseGame;
     public GameObject PauseMenu;
@@ -26,6 +30,7 @@ public class UIController : MonoBehaviour
     {
         inventoryClosed = true;
         craftingisClosed = true;
+        cookingisClosed = true;
         pauseGame = false;
     }
 
@@ -61,6 +66,20 @@ public class UIController : MonoBehaviour
                     craftingisClosed = true;
                 }
             }
+
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                if (cookingisClosed)
+                {
+                    Cooking.SetActive(true);
+                    cookingisClosed = false;
+                }
+                else
+                {
+                    Cooking.SetActive(false);
+                    cookingisClosed = true;
+                }
+            }
         }        
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -87,9 +106,14 @@ public class UIController : MonoBehaviour
                 Crafting.SetActive(false);
                 craftingisClosed = true;
             }
+            else if (!cookingisClosed)
+            {
+                Cooking.SetActive(false);
+                cookingisClosed= true;
+            }
         }
 
-        if (!craftingisClosed || !inventoryClosed||pauseGame)
+        if (!craftingisClosed || !inventoryClosed||!cookingisClosed|| pauseGame)
         {
             FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = false;
             Cursor.lockState = CursorLockMode.None;

@@ -17,9 +17,10 @@ GameObject:
   - component: {fileID: 4317153693757848266}
   - component: {fileID: 4317153693757848261}
   - component: {fileID: 4317153693757848258}
+  - component: {fileID: 1451111577}
   m_Layer: 0
   m_Name: FPSController 1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57,7 +58,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 3.91, z: 0}
+  m_Center: {x: 0, y: 3.91, z: 11}
 --- !u!136 &4317153693757848263
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -71,7 +72,7 @@ CapsuleCollider:
   m_Radius: 2.1
   m_Height: 18
   m_Direction: 1
-  m_Center: {x: 0, y: 3.91, z: 0}
+  m_Center: {x: 0, y: 3.91, z: 11}
 --- !u!54 &4317153693497422312
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -749,6 +750,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 262d3866b62657844a2dc118554c0f83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiControl: {fileID: 0}
+  pickUp: {fileID: 4317153693757848258}
   QuickItem: []
   Stamina: 10
   StaminaDecrease: 1
@@ -795,6 +798,50 @@ MonoBehaviour:
   herb: 0
   pickUpText: {fileID: 0}
   pickupBox: {fileID: 0}
+--- !u!114 &1451111577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4317153693502673544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a31d3b71039cc004283cd91f9ca883e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Qid: []
+  inventory: {fileID: 4317153693757848266}
+  availableQuest: {fileID: 0}
+  activeQuest: {fileID: 0}
+  availableQuests:
+  - {fileID: 0}
+  activeQuests:
+  - {fileID: 0}
+  totalQuest: 1
+  ItemNeededInQuest:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ItemNeededInQuestSprite:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardedItem:
+  - {fileID: 0}
+  rewardedItemSprite:
+  - {fileID: 0}
+  activeQid: 0
+  questName: {fileID: 0}
+  questDesc: {fileID: 0}
+  itemText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewarditemText:
+  - {fileID: 0}
+  complete: 0
+  completeBtn: {fileID: 0}
 --- !u!1 &4317153693502673546
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,7 +869,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4317153693502673546}
   m_LocalRotation: {x: 0.13917403, y: 4.966256e-11, z: -2.3757116e-12, w: 0.99026793}
-  m_LocalPosition: {x: 0.71, y: 11.2, z: 0}
+  m_LocalPosition: {x: 1.06, y: 14.2, z: 0.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4317153693502377640}
@@ -853,7 +900,7 @@ Camera:
     height: 1
   near clip plane: 0.5
   far clip plane: 1000
-  field of view: 30
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -907,7 +954,7 @@ PrefabInstance:
     - target: {fileID: 7021996188432019421, guid: 1f17ca97496538542af2387fb9bf20d9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.72
+      value: 10.93
       objectReference: {fileID: 0}
     - target: {fileID: 7021996188432019421, guid: 1f17ca97496538542af2387fb9bf20d9,
         type: 3}

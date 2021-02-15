@@ -12,8 +12,8 @@ public class QuestManager : MonoBehaviour
     public GameObject availableQuest;
     public GameObject activeQuest;
 
-    public List<GameObject> availableQuests = new List<GameObject>();
-    public GameObject[] activeQuests;
+    public List<Button> availableQuests = new List<Button>();
+    public List<Button> activeQuests = new List<Button>();
 
     public int totalQuest;
 
@@ -30,22 +30,30 @@ public class QuestManager : MonoBehaviour
     public TextMeshProUGUI[] itemText;
     public TextMeshProUGUI[] rewarditemText;
 
-    int a = 0;
-    int b = 0;
-    int c = 0;
+    int totalA = 0;
+    int totalB = 0;
+    int totalC = 0;
 
     public bool complete;
     public GameObject completeBtn;
     // Start is called before the first frame update
     void Start()
     {
-        activeQid = 1;
+        activeQid = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
         QuestChecker();
+        for (int i = 0; i < availableQuests.Count; i++)
+        {
+            availableQuests[i].onClick.AddListener(()=>ButtonOnClick(i));
+        }
+        for (int i = 0; i < activeQuests.Count; i++)
+        {
+            activeQuests[i].onClick.AddListener(()=>ButtonOnClick(i));
+        }
         questName.text = QuestDatabase.questList[activeQid].name;
         questDesc.text = QuestDatabase.questList[activeQid].description;
 
@@ -69,67 +77,81 @@ public class QuestManager : MonoBehaviour
     }
     public void QuestChecker()
     {
-        Debug.Log(a +","+ b + c);
-        for (int i = 0; i < inventory.slotsNumber; i++)
+        int a =0;
+        int b =0;
+        int c=0;
+        if (QuestDatabase.questList[activeQid].active)
         {
-            if (inventory.yourInventory[i].id == Database.itemList[activeQid].n1)
+            for (int i = 0; i < inventory.slotsNumber; i++)
             {
-                a += inventory.slotStack[i];
+                if (inventory.yourInventory[i].id == QuestDatabase.questList[activeQid].n1)
+                {
+                    a += inventory.slotStack[i];
+                    break;
+                }
+            }
+
+            for (int i = 0; i < inventory.slotsNumber; i++)
+            {
+                if (inventory.yourInventory[i].id == QuestDatabase.questList[activeQid].n2)
+                {
+                    b += inventory.slotStack[i];
+                    break;
+                }
+            }
+
+            for (int i = 0; i < inventory.slotsNumber; i++)
+            {
+                if (inventory.yourInventory[i].id == QuestDatabase.questList[activeQid].n3)
+                {
+                    c += inventory.slotStack[i];
+                    break;
+                }
+            }
+
+
+
+
+
+
+
+            if (a >= QuestDatabase.questList[activeQid].q1 && b >= QuestDatabase.questList[activeQid].q2 && c >= QuestDatabase.questList[activeQid].q3)
+            {
+                Debug.Log(a);
+                Debug.Log("questcom");
+                complete = true;
+                completeBtn.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("questXcom");
+                complete = false;
+                completeBtn.SetActive(false);
             }
         }
-
-        for (int i = 0; i < inventory.slotsNumber; i++)
-        {
-            if (inventory.yourInventory[i].id == Database.itemList[activeQid].n2)
-            {
-                b += inventory.slotStack[i];
-            }
-        }
-
-        for (int i = 0; i < inventory.slotsNumber; i++)
-        {
-            if (inventory.yourInventory[i].id == Database.itemList[activeQid].n3)
-            {
-                c += inventory.slotStack[i];
-            }
-        }
-
-
-
-
-
-
-
-        if (a >= Database.itemList[activeQid].q1 && b >= Database.itemList[activeQid].q2 && c >= Database.itemList[activeQid].q3)
-        {
-            Debug.Log("questcom");
-            complete = true;
-            completeBtn.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("questXcom");
-            complete = false;
-            completeBtn.SetActive(false);
-        }       
-
+    }
+    public void ButtonOnClick(int btnnumber)
+    {
+        activeQid = btnnumber;
     }
     public void AcceptQuest()
     {
-
+        QuestDatabase.questList[activeQid].active = true;
+        QuestDatabase.questList[activeQid].complete = false;
+        activeQid = 0;
     }
 
     public void CompleteQuest()
     {
         if (complete == true)
         {
-            a = Database.itemList[activeQid].q1;
-            b = Database.itemList[activeQid].q2;
-            c = Database.itemList[activeQid].q3;
-
+            totalA = QuestDatabase.questList[activeQid].q1;
+            totalB = QuestDatabase.questList[activeQid].q2;
+            totalC = QuestDatabase.questList[activeQid].q3;
+            int recountA = 0;
             for (int i = 0; i < inventory.slotsNumber; i++)
             {
-                if (inventory.yourInventory[i].id == activeQid)
+                if (inventory.yourInventory[i].id == QuestDatabase.questList[activeQid].r1)
                 {
                     if (inventory.slotStack[i] == inventory.maxStack)
                     {
@@ -137,22 +159,30 @@ public class QuestManager : MonoBehaviour
                     }
                     else
                     {
-                        inventory.slotStack[i] += 1;
+                        inventory.slotStack[i] += QuestDatabase.questList[activeQid].qr1;
+                        if (inventory.slotStack[i] > inventory.maxStack)
+                        {
+                            recountA= inventory.slotStack[i] - inventory.maxStack;
+                            inventory.slotStack[i] -= recountA;
+                            i++;
+                            inventory.yourInventory[i] = Database.itemList[QuestDatabase.questList[activeQid].r1];
+                            inventory.slotStack[i] += recountA;
+                        }
                         i = inventory.slotsNumber;
                     }
 
                     for (int j = 0; j < inventory.slotsNumber; j++)
                     {
-                        if (inventory.yourInventory[j].id == Database.itemList[activeQid].n1 && a > 0)
+                        if (inventory.yourInventory[j].id == QuestDatabase.questList[activeQid].n1 && totalA > 0)
                         {
-                            if (inventory.slotStack[j] > a)
+                            if (inventory.slotStack[j] > totalA)
                             {
-                                inventory.slotStack[j] -= a;
-                                a = 0;
+                                inventory.slotStack[j] -= totalA;
+                                totalA = 0;
                             }
                             else
                             {
-                                a -= inventory.slotStack[j];
+                                totalA -= inventory.slotStack[j];
                                 inventory.slotStack[j] = 0;
                                 inventory.yourInventory[j] = Database.itemList[0];
 
@@ -163,16 +193,16 @@ public class QuestManager : MonoBehaviour
 
                     for (int k = 0; k < inventory.slotsNumber; k++)
                     {
-                        if (inventory.yourInventory[k].id == Database.itemList[activeQid].n2 && b > 0)
+                        if (inventory.yourInventory[k].id == QuestDatabase.questList[activeQid].n2 && totalB > 0)
                         {
-                            if (inventory.slotStack[k] > b)
+                            if (inventory.slotStack[k] > totalB)
                             {
-                                inventory.slotStack[k] -= b;
-                                b = 0;
+                                inventory.slotStack[k] -= totalB;
+                                totalB = 0;
                             }
                             else
                             {
-                                b -= inventory.slotStack[k];
+                                totalB -= inventory.slotStack[k];
                                 inventory.slotStack[k] = 0;
                                 inventory.yourInventory[k] = Database.itemList[0];
 
@@ -183,16 +213,16 @@ public class QuestManager : MonoBehaviour
 
                     for (int l = 0; l < inventory.slotsNumber; l++)
                     {
-                        if (inventory.yourInventory[l].id == Database.itemList[activeQid].n3 && c > 0)
+                        if (inventory.yourInventory[l].id == QuestDatabase.questList[activeQid].n3 && totalC > 0)
                         {
-                            if (inventory.slotStack[l] > c)
+                            if (inventory.slotStack[l] > totalC)
                             {
-                                inventory.slotStack[l] -= c;
-                                c = 0;
+                                inventory.slotStack[l] -= totalC;
+                                totalC = 0;
                             }
                             else
                             {
-                                c -= inventory.slotStack[l];
+                                totalC -= inventory.slotStack[l];
                                 inventory.slotStack[l] = 0;
                                 inventory.yourInventory[l] = Database.itemList[0];
 
@@ -211,22 +241,22 @@ public class QuestManager : MonoBehaviour
             {
                 if (inventory.yourInventory[i].id == 0 && complete == true)
                 {
-                    inventory.yourInventory[i] = Database.itemList[activeQid];
+                    inventory.yourInventory[i] = Database.itemList[QuestDatabase.questList[activeQid].r1];
 
-                    inventory.slotStack[i] += 1;
+                    inventory.slotStack[i] += QuestDatabase.questList[activeQid].qr1;
 
                     for (int j = 0; j < inventory.slotsNumber; j++)
                     {
-                        if (inventory.yourInventory[j].id == Database.itemList[activeQid].n1 && a > 0)
+                        if (inventory.yourInventory[j].id == QuestDatabase.questList[activeQid].n1 && totalA > 0)
                         {
-                            if (inventory.slotStack[j] > a)
+                            if (inventory.slotStack[j] > totalA)
                             {
-                                inventory.slotStack[j] -= a;
-                                a = 0;
+                                inventory.slotStack[j] -= totalA;
+                                totalA = 0;
                             }
                             else
                             {
-                                a -= inventory.slotStack[j];
+                                totalA -= inventory.slotStack[j];
                                 inventory.slotStack[j] = 0;
                                 inventory.yourInventory[j] = Database.itemList[0];
 
@@ -237,16 +267,16 @@ public class QuestManager : MonoBehaviour
 
                     for (int k = 0; k < inventory.slotsNumber; k++)
                     {
-                        if (inventory.yourInventory[k].id == Database.itemList[activeQid].n2 && b > 0)
+                        if (inventory.yourInventory[k].id == QuestDatabase.questList[activeQid].n2 && totalB > 0)
                         {
-                            if (inventory.slotStack[k] > b)
+                            if (inventory.slotStack[k] > totalB)
                             {
-                                inventory.slotStack[k] -= b;
-                                b = 0;
+                                inventory.slotStack[k] -= totalB;
+                                totalB = 0;
                             }
                             else
                             {
-                                b -= inventory.slotStack[k];
+                                totalB -= inventory.slotStack[k];
                                 inventory.slotStack[k] = 0;
                                 inventory.yourInventory[k] = Database.itemList[0];
 
@@ -258,16 +288,16 @@ public class QuestManager : MonoBehaviour
 
                     for (int l = 0; l < inventory.slotsNumber; l++)
                     {
-                        if (inventory.yourInventory[l].id == Database.itemList[activeQid].n3 && c > 0)
+                        if (inventory.yourInventory[l].id == QuestDatabase.questList[activeQid].n3 && totalC > 0)
                         {
-                            if (inventory.slotStack[l] > c)
+                            if (inventory.slotStack[l] > totalC)
                             {
-                                inventory.slotStack[l] -= c;
-                                c = 0;
+                                inventory.slotStack[l] -= totalC;
+                                totalC = 0;
                             }
                             else
                             {
-                                c -= inventory.slotStack[l];
+                                totalC -= inventory.slotStack[l];
                                 inventory.slotStack[l] = 0;
                                 inventory.yourInventory[l] = Database.itemList[0];
 
@@ -276,9 +306,18 @@ public class QuestManager : MonoBehaviour
 
 
                     }
+                    
+
 
                     complete = false;
                 }
+                
+            }
+            QuestDatabase.questList[activeQid].complete = true;
+            activeQuests[activeQid - 1].gameObject.SetActive(false);
+            if (QuestDatabase.questList[activeQid].repeatable)
+            {
+                availableQuests[activeQid-1].gameObject.SetActive(true);
             }
 
         }

@@ -6,7 +6,8 @@ using UnityStandardAssets.Characters.FirstPerson;
 using TMPro;
 
 public class Player : MonoBehaviour
-{    
+{
+    public UIController uiControl;
     public static float Head, Body,Arm,Legs;
     private enum Weapon { Hand, Knife, Axe };
     public List<GameObject> QuickItem = new List<GameObject>();
@@ -18,9 +19,12 @@ public class Player : MonoBehaviour
     public Slider healthSlider, thristSlider, hungerSlider, headSlider, bodySlider, armSlider, legSlider; 
     public bool Dead;
     public TextMeshProUGUI hpPenaltyBox;
+    public GameObject msgBox;
+    public TextMeshProUGUI msgBoxText;
     public FirstPersonController FPS;
     public bool walk, run, unarm, axe, p_Axe,attack;
     public static Animator anim;
+    public bool enterCraft, enterCook, enterQuest;
 
     // Start is called before the first frame update
     void Start()
@@ -172,6 +176,66 @@ public class Player : MonoBehaviour
             staminaSlider.value += (Time.deltaTime / StaminaDecrease);
             Stamina += (Time.deltaTime / StaminaDecrease);
         }
+
+        //UI
+        if (enterCook)
+        {
+            msgBox.SetActive(true);
+            msgBoxText.text = "Press E to Cook";
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (uiControl.cookingisClosed)
+                {
+                    uiControl.Cooking.SetActive(true);
+                    uiControl.cookingisClosed = false;
+                }
+            }
+        }
+        else
+        {
+            msgBox.SetActive(false);
+            msgBoxText.text = " ";
+        }
+        if (enterCraft)
+        {
+            msgBox.SetActive(true);
+            msgBoxText.text = "Press E to Craft";
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (uiControl.craftingisClosed)
+                {
+                    uiControl.Crafting.SetActive(true);
+                    uiControl.craftingisClosed = false;
+                }
+            }
+
+        }
+        else
+        {
+            msgBox.SetActive(false);
+            msgBoxText.text = " ";
+        }
+        if (enterQuest)
+        {
+            msgBox.SetActive(true);
+            msgBoxText.text = "Press E to access Quest";
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (uiControl.questisClosed)
+                {
+                    uiControl.Quest.SetActive(true);
+                    uiControl.questisClosed = false;
+                }
+            }
+
+        }
+        else
+        {
+            Debug.Log("exitquest");
+
+            msgBox.SetActive(false);
+            msgBoxText.text = " ";
+        }               
     }
 
     public void UpdateHealth()
@@ -247,6 +311,43 @@ public class Player : MonoBehaviour
             FPS.m_WalkSpeed = 10;
             hpPenaltyBox.text = " ";
 
+        }
+    }
+   
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "CookingStation")
+        {
+            
+            enterCook= true;
+        }
+        else if (collision.gameObject.tag == "CraftingStation")
+        {
+         
+            enterCraft = true;
+        }
+        else if (collision.gameObject.tag == "QuestStation")
+        {
+          
+            enterQuest = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "CookingStation")
+        {
+            Debug.Log("exitcook");
+            enterCook = false;
+        }
+        else if (other.gameObject.tag == "CraftingStation")
+        {
+      
+            enterCraft = false;
+        }
+        else if (other.gameObject.tag == "QuestStation")
+        {
+            enterQuest = false;
         }
     }
 

@@ -9,6 +9,8 @@ TagManager:
   - CookingStation
   - CraftingStation
   - QuestStation
+  - Tree
+  - Stone
   layers:
   - Default
   - TransparentFX

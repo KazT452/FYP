@@ -22,9 +22,10 @@ public class Player : MonoBehaviour
     public GameObject msgBox;
     public TextMeshProUGUI msgBoxText;
     public FirstPersonController FPS;
-    public bool walk, run, unarm, axe, p_Axe,attack;
+    public static bool walk, run, unarm, axe, p_Axe,attack;
     public static Animator anim;
     public bool enterCraft, enterCook, enterQuest;
+    public bool enterSafePoint;
 
     // Start is called before the first frame update
     void Start()
@@ -88,6 +89,20 @@ public class Player : MonoBehaviour
         }
         attack = Input.GetButtonDown("Fire1");
         anim.SetBool("Attack", attack);
+        //if (attack)
+        //{
+        //    if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+        //    {
+        //        attack = false;
+        //        Debug.Log("changeanim");
+        //    }
+        //    else
+        //    {
+        //        attack = true;
+        //        Debug.Log(anim.GetCurrentAnimatorStateInfo(0).fullPathHash);
+        //        Debug.Log("nonononoochangeanim");
+        //    }
+        //}
         UpdateHealth();
         HealthPenalty();
         //Health Controller
@@ -190,13 +205,8 @@ public class Player : MonoBehaviour
                     uiControl.cookingisClosed = false;
                 }
             }
-        }
-        else
-        {
-            msgBox.SetActive(false);
-            msgBoxText.text = " ";
-        }
-        if (enterCraft)
+        }        
+        else if (enterCraft)
         {
             msgBox.SetActive(true);
             msgBoxText.text = "Press E to Craft";
@@ -210,12 +220,7 @@ public class Player : MonoBehaviour
             }
 
         }
-        else
-        {
-            msgBox.SetActive(false);
-            msgBoxText.text = " ";
-        }
-        if (enterQuest)
+        else if (enterQuest)
         {
             msgBox.SetActive(true);
             msgBoxText.text = "Press E to access Quest";
@@ -231,8 +236,6 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log("exitquest");
-
             msgBox.SetActive(false);
             msgBoxText.text = " ";
         }               
@@ -331,6 +334,10 @@ public class Player : MonoBehaviour
           
             enterQuest = true;
         }
+        if (collision.gameObject.tag == "Safepoint")
+        {
+            enterSafePoint = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -348,6 +355,10 @@ public class Player : MonoBehaviour
         else if (other.gameObject.tag == "QuestStation")
         {
             enterQuest = false;
+        }
+        if (other.gameObject.tag == "Safepoint")
+        {
+            enterSafePoint = false;
         }
     }
 

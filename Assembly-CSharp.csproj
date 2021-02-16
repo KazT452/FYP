@@ -65,11 +65,13 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Database.cs" />
     <Compile Include="Assets\Scripts\DayNightSystem.cs" />
+    <Compile Include="Assets\Scripts\DaysManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\PickUp.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\PlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Quest.cs" />
     <Compile Include="Assets\Scripts\QuestDatabase.cs" />
     <Compile Include="Assets\Scripts\QuestManager.cs" />

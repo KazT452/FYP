@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &8692088390104221816
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4158100250235971507}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.30656147, y: 0.16302988, z: 0.06331678}
+  m_Center: {x: -0.05515809, y: 0.5168729, z: 0.000000016927995}
+--- !u!65 &3430594108750210417
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4158100250307289715}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8705728, y: 0.16439168, z: 0.13078421}
+  m_Center: {x: -0.0037782919, y: 0.86999255, z: -0.0000001030516}
 --- !u!1 &4317153693502673544
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,7 +777,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiControl: {fileID: 0}
-  pickUp: {fileID: 4317153693757848258}
   QuickItem: []
   Stamina: 10
   StaminaDecrease: 1
@@ -772,13 +797,12 @@ MonoBehaviour:
   legSlider: {fileID: 0}
   Dead: 0
   hpPenaltyBox: {fileID: 0}
+  msgBox: {fileID: 0}
+  msgBoxText: {fileID: 0}
   FPS: {fileID: 4317153693491423080}
-  walk: 0
-  run: 0
-  unarm: 0
-  axe: 0
-  p_Axe: 0
-  attack: 0
+  enterCraft: 0
+  enterCook: 0
+  enterQuest: 0
 --- !u!114 &4317153693757848258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -941,6 +965,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4317153693502377640}
     m_Modifications:
+    - target: {fileID: 4870939408024439087, guid: 1f17ca97496538542af2387fb9bf20d9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4870939408171257071, guid: 1f17ca97496538542af2387fb9bf20d9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7021996188432019421, guid: 1f17ca97496538542af2387fb9bf20d9,
         type: 3}
       propertyPath: m_LocalPosition.x

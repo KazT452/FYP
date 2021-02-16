@@ -7,6 +7,7 @@ using TMPro;
 public class Inventory : MonoBehaviour
 {
     public UIController uiControl;
+    public PlayerCombat pCombat;
 
     public List<Item> yourInventory = new List<Item>();
     public List<Item> draggedItem = new List<Item>();
@@ -71,7 +72,6 @@ public class Inventory : MonoBehaviour
     public bool cook;
 
     //Equip
-    public GameObject Axe, Pickaxe;
 
     // Start is called before the first frame update
     void Start()
@@ -94,15 +94,15 @@ public class Inventory : MonoBehaviour
         {
             if (qSlot[0].sprite != Database.itemList[0].itemSprite)
             {
-                if (!Axe.activeSelf)
+                if (!pCombat.Axe.activeSelf)
                 {
                     Player.anim.SetBool("Unarm", false);
-                    Axe.SetActive(true);
+                    pCombat.Axe.SetActive(true);
                 }
                 else
                 {
                     Player.anim.SetBool("Unarm", true);
-                    Axe.SetActive(false);
+                    pCombat.Axe.SetActive(false);
                 }
             }
         }
@@ -110,15 +110,15 @@ public class Inventory : MonoBehaviour
         {
             if (qSlot[1].sprite != Database.itemList[0].itemSprite)
             {
-                if (!Pickaxe.activeSelf)
+                if (!pCombat.Pickaxe.activeSelf)
                 {
                     Player.anim.SetBool("Unarm", false);
-                    Pickaxe.SetActive(true);
+                    pCombat.Pickaxe.SetActive(true);
                 }
                 else
                 {
                     Player.anim.SetBool("Unarm", true);
-                    Pickaxe.SetActive(false);
+                    pCombat.Pickaxe.SetActive(false);
                 }
             }
         }

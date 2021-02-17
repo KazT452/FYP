@@ -11,6 +11,7 @@ TagManager:
   - QuestStation
   - Tree
   - Stone
+  - SavePoint
   layers:
   - Default
   - TransparentFX

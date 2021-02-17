@@ -19,6 +19,10 @@ public class Tree : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (dayOver == 3)
+        {
+            dayOver = 0;
+        }
         if (health <= 0)
         {
             for(int i = 0; i <= 2; i++)
@@ -54,5 +58,12 @@ public class Tree : MonoBehaviour
             }
         }
         
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Debug.Log("PLAYER");
+        }
     }
 }

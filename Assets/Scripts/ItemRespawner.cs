@@ -5,16 +5,33 @@ using UnityEngine;
 public class ItemRespawner : MonoBehaviour
 {
     public Boulder _boulder;
-    public Vector3[] positions;
+    public List<Vector3>boudler_positions = new List<Vector3>();
+    public List<Vector3> tree_Positions = new List<Vector3>();
     public int positionBank;
     public GameObject boulder;
+    public GameObject tree;
+    public TerrainData terrain;
     // Start is called before the first frame update
     void Start()
     {
-        positionBank = 15;
-        for (int i = 0; i < positionBank; i++)
+        GameObject[] boulders = GameObject.FindGameObjectsWithTag("Stone");
+        foreach (GameObject boulder in boulders)
         {
-            Spawn();
+            boudler_positions.Add(boulder.transform.position);
+        }
+        //GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
+        //foreach (GameObject tree in trees)
+        //{
+        //    tree_Positions.Add(tree.transform.position);
+        //}
+        foreach(TreeInstance newtree in terrain.treeInstances)
+        {
+            Vector3 worldTreePos = Vector3.Scale(newtree.position, terrain.size) + Terrain.activeTerrain.transform.position;
+            tree_Positions.Add(worldTreePos);
+        }
+        foreach(Vector3 treepos in tree_Positions)
+        {
+            Instantiate(tree, treepos, Quaternion.identity);
         }
     }
 
@@ -26,14 +43,7 @@ public class ItemRespawner : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        GameObject[] boulders = GameObject.FindGameObjectsWithTag("Stone");
-        foreach(GameObject boulder in boulders)
-        {
-            if (collision.gameObject == gameObject)
-            {
 
-            }
-        }        
     }
 
     public void Spawn()

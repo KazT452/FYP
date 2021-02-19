@@ -27,7 +27,7 @@ public class Tree : MonoBehaviour
         {
             for(int i = 0; i <= 2; i++)
             {
-                Instantiate(stick, transform);
+                Instantiate(stick, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z),Quaternion.identity);
             }
             Destroy(gameObject);
         }
@@ -36,15 +36,16 @@ public class Tree : MonoBehaviour
     public void Chop()
     {
         int drop;
+        Debug.Log(Player.unarm);
         if (Player.attack && Player.unarm)
         {
             Debug.Log("CHOP_Hand");
             drop = Random.Range(0, 5);
             health -= 3;
-            Player.Arm -= 3;
+            Player.Arm -= 2;
             if(drop == 2)
             {
-                Instantiate(stick, transform);
+                Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
             }
         }
         else if (Player.attack && pCombat.Axe.activeSelf)
@@ -52,9 +53,19 @@ public class Tree : MonoBehaviour
             Debug.Log("CHOP_AXE");
             drop = Random.Range(0,3);
             health -= 5;
-            if(drop == 2)
+            if (drop == 2)
             {
-                Instantiate(stick, transform);
+                Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+            }
+        }
+        else if (Player.attack && pCombat.Pickaxe.activeSelf)
+        {
+            Debug.Log("CHOP_AXE");
+            drop = Random.Range(0,3);
+            health -= 4;
+            if (drop == 2)
+            {
+                Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
             }
         }
         

@@ -6,6 +6,7 @@ using TMPro;
 public class DaysManager : MonoBehaviour
 {
     public Player player;
+    public ItemRespawner itemRespawner;
     public GameObject savePoint;
     public DayNightSystem dayNightSystem;
     public GameObject eyelidScreen;

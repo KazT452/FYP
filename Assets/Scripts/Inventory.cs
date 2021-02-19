@@ -77,6 +77,8 @@ public class Inventory : MonoBehaviour
     void Start()
     {
         //testing
+        yourInventory[0] = Database.itemList[6];
+        slotStack[0] += 1;
         //Cooking items in database
         firstCookableItemId = 5;
         lastCookableItemId = 5;
@@ -96,12 +98,12 @@ public class Inventory : MonoBehaviour
             {
                 if (!pCombat.Axe.activeSelf)
                 {
-                    Player.anim.SetBool("Unarm", false);
+                    Player.unarm = false;
                     pCombat.Axe.SetActive(true);
                 }
                 else
                 {
-                    Player.anim.SetBool("Unarm", true);
+                    Player.unarm = true;
                     pCombat.Axe.SetActive(false);
                 }
             }
@@ -112,12 +114,12 @@ public class Inventory : MonoBehaviour
             {
                 if (!pCombat.Pickaxe.activeSelf)
                 {
-                    Player.anim.SetBool("Unarm", false);
+                    Player.unarm = false;
                     pCombat.Pickaxe.SetActive(true);
                 }
                 else
                 {
-                    Player.anim.SetBool("Unarm", true);
+                    Player.unarm = true;
                     pCombat.Pickaxe.SetActive(false);
                 }
             }

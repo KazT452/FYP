@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        attack = false;
+        unarm = true;
         anim = transform.GetComponentInChildren<Animator>();
         Hunger = 200f;
         Thrist = 150f;
@@ -62,6 +64,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         //Animator Settings
+        anim.SetBool("Attack", attack);
+        anim.SetBool("Unarm", unarm);
         if (FPS.m_Input!= Vector2.zero)
         {
             anim.SetBool("Walk", true);
@@ -87,22 +91,40 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("isGrounded", true);
         }
-        attack = Input.GetButtonDown("Fire1");
-        anim.SetBool("Attack", attack);
-        //if (attack)
-        //{
-        //    if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
-        //    {
-        //        attack = false;
-        //        Debug.Log("changeanim");
-        //    }
-        //    else
-        //    {
-        //        attack = true;
-        //        Debug.Log(anim.GetCurrentAnimatorStateInfo(0).fullPathHash);
-        //        Debug.Log("nonononoochangeanim");
-        //    }
-        //}
+
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("wp_Attk") || anim.GetCurrentAnimatorStateInfo(0).IsName("hd_Attk"))
+        {
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("wp_Attk"))
+            {
+                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >=0.5)
+                {
+                    attack = false;
+                }
+            }
+            else if (anim.GetCurrentAnimatorStateInfo(0).IsName("hd_Attk"))
+            {
+                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5)
+                {
+                    attack = false;
+                }
+            }
+        }
+
+        if (!attack)
+        {
+            if (Input.GetButtonDown("Fire1") && !anim.GetBool("Unarm"))
+            {
+                anim.Play("wp_Attk");
+                attack = true;
+
+            }
+            else if (Input.GetButtonDown("Fire1") && anim.GetBool("Unarm"))
+            {
+                anim.Play("hd_Attk");
+                attack = true;
+            }
+           
+        }        
         UpdateHealth();
         HealthPenalty();
         //Health Controller

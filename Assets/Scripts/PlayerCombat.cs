@@ -23,6 +23,7 @@ public class PlayerCombat : MonoBehaviour
     {
         if (other.gameObject.tag == "Tree")
         {
+            Debug.Log("touchtree");
             tree = other.GetComponent<Tree>();
             tree.Chop();
         }

@@ -118,13 +118,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8542219626756415495}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 156a46c396cb4264281851618526adf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   respawner: {fileID: 0}
+  pCombat: {fileID: 0}
   terrain: {fileID: 0}
+  health: 0
+  rock: {fileID: 5160167283562392598, guid: 63e2f01cb360caa4a8cb352293f1d0bb, type: 3}
+  daysOver: 0
 --- !u!54 &-6006417719313995843
 Rigidbody:
   m_ObjectHideFlags: 0

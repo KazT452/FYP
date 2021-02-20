@@ -24,11 +24,11 @@ public class ItemRespawner : MonoBehaviour
         //{
         //    tree_Positions.Add(tree.transform.position);
         //}
-        foreach(TreeInstance newtree in terrain.treeInstances)
-        {
-            Vector3 worldTreePos = Vector3.Scale(newtree.position, terrain.size) + Terrain.activeTerrain.transform.position;
-            tree_Positions.Add(worldTreePos);
-        }
+        //foreach(TreeInstance newtree in terrain.treeInstances)
+        //{
+        //    List<TreeInstance> newTrees = new List<TreeInstance>(0);
+        //    terrain.treeInstances = newTrees.ToArray();
+        //}
         foreach(Vector3 treepos in tree_Positions)
         {
             Instantiate(tree, treepos, Quaternion.identity);

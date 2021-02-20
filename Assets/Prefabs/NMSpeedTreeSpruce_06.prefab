@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2300000}
   - component: {fileID: 13600000}
   - component: {fileID: 865702211}
+  - component: {fileID: 3288098461477138209}
   m_Layer: 2
   m_Name: NMSpeedTreeSpruce_06
   m_TagString: Tree
@@ -122,6 +123,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3288098461477138209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a8572c8e2574a44baa4c099ee7e5a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dayOver: 0
+  health: 0
+  stick: {fileID: 6096147634855345369, guid: 323415794a7424c47bda880a8c43628d, type: 3}
+  inventory: {fileID: 0}
+  pCombat: {fileID: 0}
 --- !u!21 &2100000
 Material:
   serializedVersion: 6

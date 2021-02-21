@@ -15,7 +15,7 @@ public class Boulder : MonoBehaviour
     void Awake()
     {
         respawner = GameObject.FindGameObjectWithTag("GameController").GetComponent<ItemRespawner>();
-        terrain = GameObject.FindGameObjectWithTag("Ground").GetComponent<Terrain>();
+        pCombat = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCombat>();
     }
 
     private void Start()
@@ -34,38 +34,10 @@ public class Boulder : MonoBehaviour
         {
             for (int i = 0; i <= 2; i++)
             {
-                Instantiate(rock, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
+                Instantiate(rock, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y+5+i, gameObject.transform.position.z), Quaternion.identity);
             }
             Destroy(gameObject);
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //if (other.gameObject.tag != "Ground"||other==null||other.tag=="Untagged")
-        //{
-        //    if(gameObject.transform.position.y!= terrain.terrainData.alphamapHeight)
-        //    {
-        //        Debug.Log(other);
-        //        Debug.Log("Respawn");
-        //        respawner.Spawn();
-        //        Destroy(gameObject);
-        //    }           
-        //}
-        //else if(other.tag=="Ground")
-        //{
-        //    for(int i = 0; i < respawner.positionBank; i++)
-        //    {
-        //        if (respawner.positions[i] != Vector3.zero)
-        //        {
-        //            respawner.positions[i] = gameObject.transform.position;
-        //        }
-        //        else
-        //        {
-        //            continue;
-        //        }
-        //    }
-        //}
     }
 
     public void Mine()
@@ -80,7 +52,7 @@ public class Boulder : MonoBehaviour
             Player.Arm -= 2;
             if (drop == 2)
             {
-                Instantiate(rock, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                Instantiate(rock, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y+5, gameObject.transform.position.z), Quaternion.identity);
             }
         }
         else if (Player.attack && pCombat.Pickaxe.activeSelf)
@@ -90,7 +62,7 @@ public class Boulder : MonoBehaviour
             health -= 5;
             if (drop == 2)
             {
-                Instantiate(rock, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                Instantiate(rock, new Vector3(gameObject.transform.position.x , gameObject.transform.position.y+5, gameObject.transform.position.z ), Quaternion.identity);
             }
         }
         else if (Player.attack && pCombat.Axe.activeSelf)
@@ -100,7 +72,7 @@ public class Boulder : MonoBehaviour
             health -= 4;
             if (drop == 2)
             {
-                Instantiate(rock, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                Instantiate(rock, new Vector3(gameObject.transform.position.x , gameObject.transform.position.y+5, gameObject.transform.position.z ), Quaternion.identity);
             }
         }
     }

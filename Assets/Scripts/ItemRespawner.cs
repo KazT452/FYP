@@ -9,7 +9,8 @@ public class ItemRespawner : MonoBehaviour
     public List<Vector3>boudler_positions = new List<Vector3>();
     public List<Vector3> tree_Positions = new List<Vector3>();
     public List<Vector3> herbPositions = new List<Vector3>();
-    
+    public List<Vector3> herbSpawnedPos = new List<Vector3>();
+
     public TerrainData terrain;
 
     #region Item
@@ -22,6 +23,7 @@ public class ItemRespawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        HerbSpawn();
         GameObject[] boulders = GameObject.FindGameObjectsWithTag("Stone");
         foreach (GameObject boulder in boulders)
         {
@@ -46,10 +48,7 @@ public class ItemRespawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (herbPositions.Count <= 100)
-        {
-            Spawn();
-        }
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -63,5 +62,53 @@ public class ItemRespawner : MonoBehaviour
         float posRandZ = Random.Range(120f, 1720f);
         float posRandY = Random.Range(1.4f, 3f);
         Instantiate(herb, new Vector3(posRandX, posRandY, posRandZ), Quaternion.identity);
+    }
+
+    public void HerbSpawn()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+                Debug.Log("YEET");
+
+            for (int k = 1; k < herbSpawnedPos.Count+2; k++)
+            {
+                RandomAgain:
+                int RandPos = Random.Range(0, herbPositions.Count);
+                if (herbSpawnedPos.Count > 0)
+                {
+                    if (k < herbSpawnedPos.Count + 1)
+                    {
+                        Debug.Log("??"+k);
+                        if (herbPositions[RandPos] != herbSpawnedPos[k-1])
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            Debug.Log("GOBACK");
+                            goto RandomAgain;
+                        }
+                    }
+                    else
+                    {
+                        if (herbPositions[RandPos] != herbSpawnedPos[herbSpawnedPos.Count-1])
+                        {
+                            Debug.Log("SPWANN"+k);
+                            Instantiate(herb, herbPositions[RandPos], Quaternion.identity);
+                            herbSpawnedPos.Add(herbPositions[RandPos]);
+                        }
+                        else
+                        {
+                            goto RandomAgain;
+                        }
+                    }
+                }
+                else
+                {
+                    Instantiate(herb, herbPositions[RandPos], Quaternion.identity);
+                    herbSpawnedPos.Add(herbPositions[RandPos]);
+                }
+            }
+        }
     }
 }

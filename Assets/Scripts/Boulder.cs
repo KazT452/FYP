@@ -21,6 +21,7 @@ public class Boulder : MonoBehaviour
     private void Start()
     {
         health = 30;
+        daysOver = 0;
     }
 
     // Update is called once per frame
@@ -29,6 +30,8 @@ public class Boulder : MonoBehaviour
         if (daysOver == 3)
         {
             daysOver = 0;
+            gameObject.SetActive(true);
+            health = 30;
         }
         if (health <= 0)
         {
@@ -36,7 +39,7 @@ public class Boulder : MonoBehaviour
             {
                 Instantiate(rock, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y+5+i, gameObject.transform.position.z), Quaternion.identity);
             }
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
@@ -44,36 +47,108 @@ public class Boulder : MonoBehaviour
     {
         int drop;
         Debug.Log(Player.unarm);
-        if (Player.attack && Player.unarm)
+        if (Player.Arm >= 15)
         {
-            Debug.Log("CHOP_Hand");
-            drop = Random.Range(0, 5);
-            health -= 3;
-            Player.Arm -= 2;
-            if (drop == 2)
+            if (Player.attack && Player.unarm)
             {
-                Instantiate(rock, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y+5, gameObject.transform.position.z), Quaternion.identity);
+                Debug.Log("CHOP_Hand");
+                drop = Random.Range(0, 5);
+                health -= 3;
+                Player.Arm -= 2;
+                if (drop == 2)
+                {
+                    Instantiate(rock, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 5, gameObject.transform.position.z), Quaternion.identity);
+                }
+            }
+            else if (Player.attack && pCombat.Pickaxe.activeSelf)
+            {
+                Debug.Log("CHOP_AXE");
+                drop = Random.Range(0, 3);
+                health -= 5;
+                if (drop == 2)
+                {
+                    Instantiate(rock, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 5, gameObject.transform.position.z), Quaternion.identity);
+                }
+            }
+            else if (Player.attack && pCombat.Axe.activeSelf)
+            {
+                Debug.Log("CHOP_AXE");
+                drop = Random.Range(0, 3);
+                health -= 4;
+                if (drop == 2)
+                {
+                    Instantiate(rock, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 5, gameObject.transform.position.z), Quaternion.identity);
+                }
             }
         }
-        else if (Player.attack && pCombat.Pickaxe.activeSelf)
+        else if (Player.Arm < 15 && Player.Arm > 5)
         {
-            Debug.Log("CHOP_AXE");
-            drop = Random.Range(0, 3);
-            health -= 5;
-            if (drop == 2)
+            if (Player.attack && Player.unarm)
             {
-                Instantiate(rock, new Vector3(gameObject.transform.position.x , gameObject.transform.position.y+5, gameObject.transform.position.z ), Quaternion.identity);
+                Debug.Log("CHOP_Hand");
+                drop = Random.Range(0, 5);
+                health -= 2;
+                Player.Arm -= 2;
+                if (drop == 2)
+                {
+                    Instantiate(rock, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 5, gameObject.transform.position.z), Quaternion.identity);
+                }
+            }
+            else if (Player.attack && pCombat.Pickaxe.activeSelf)
+            {
+                Debug.Log("CHOP_AXE");
+                drop = Random.Range(0, 3);
+                health -= 4;
+                if (drop == 2)
+                {
+                    Instantiate(rock, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 5, gameObject.transform.position.z), Quaternion.identity);
+                }
+            }
+            else if (Player.attack && pCombat.Axe.activeSelf)
+            {
+                Debug.Log("CHOP_AXE");
+                drop = Random.Range(0, 3);
+                health -= 3;
+                if (drop == 2)
+                {
+                    Instantiate(rock, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 5, gameObject.transform.position.z), Quaternion.identity);
+                }
             }
         }
-        else if (Player.attack && pCombat.Axe.activeSelf)
+        else if (Player.Arm < 5)
         {
-            Debug.Log("CHOP_AXE");
-            drop = Random.Range(0, 3);
-            health -= 4;
-            if (drop == 2)
+            if (Player.attack && Player.unarm)
             {
-                Instantiate(rock, new Vector3(gameObject.transform.position.x , gameObject.transform.position.y+5, gameObject.transform.position.z ), Quaternion.identity);
+                Debug.Log("CHOP_Hand");
+                drop = Random.Range(0, 5);
+                health -= 1;
+                Player.Arm -= 2;
+                if (drop == 2)
+                {
+                    Instantiate(rock, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 5, gameObject.transform.position.z), Quaternion.identity);
+                }
+            }
+            else if (Player.attack && pCombat.Pickaxe.activeSelf)
+            {
+                Debug.Log("CHOP_AXE");
+                drop = Random.Range(0, 3);
+                health -= 3;
+                if (drop == 2)
+                {
+                    Instantiate(rock, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 5, gameObject.transform.position.z), Quaternion.identity);
+                }
+            }
+            else if (Player.attack && pCombat.Axe.activeSelf)
+            {
+                Debug.Log("CHOP_AXE");
+                drop = Random.Range(0, 3);
+                health -= 2;
+                if (drop == 2)
+                {
+                    Instantiate(rock, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 5, gameObject.transform.position.z), Quaternion.identity);
+                }
             }
         }
+        
     }
 }

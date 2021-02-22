@@ -22,6 +22,8 @@ public class Tree : MonoBehaviour
         if (dayOver == 3)
         {
             dayOver = 0;
+            health = 30;
+            gameObject.SetActive(true);
         }
         if (health <= 0)
         {
@@ -29,7 +31,7 @@ public class Tree : MonoBehaviour
             {
                 Instantiate(stick, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z),Quaternion.identity);
             }
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
@@ -37,44 +39,109 @@ public class Tree : MonoBehaviour
     {
         int drop;
         Debug.Log(Player.unarm);
-        if (Player.attack && Player.unarm)
+        if(Player.Arm >= 15)
         {
-            Debug.Log("CHOP_Hand");
-            drop = Random.Range(0, 5);
-            health -= 3;
-            Player.Arm -= 2;
-            if(drop == 2)
+            if (Player.attack && Player.unarm)
             {
-                Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                Debug.Log("CHOP_Hand");
+                drop = Random.Range(0, 5);
+                health -= 3;
+                Player.Arm -= 2;
+                if (drop == 2)
+                {
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                }
+            }
+            else if (Player.attack && pCombat.Axe.activeSelf)
+            {
+                Debug.Log("CHOP_AXE");
+                drop = Random.Range(0, 3);
+                health -= 5;
+                if (drop == 2)
+                {
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                }
+            }
+            else if (Player.attack && pCombat.Pickaxe.activeSelf)
+            {
+                Debug.Log("CHOP_AXE");
+                drop = Random.Range(0, 3);
+                health -= 4;
+                if (drop == 2)
+                {
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                }
             }
         }
-        else if (Player.attack && pCombat.Axe.activeSelf)
+        else if (Player.Arm < 15 && Player.Arm > 5)
         {
-            Debug.Log("CHOP_AXE");
-            drop = Random.Range(0,3);
-            health -= 5;
-            if (drop == 2)
+            if (Player.attack && Player.unarm)
             {
-                Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                Debug.Log("CHOP_Hand");
+                drop = Random.Range(0, 5);
+                health -= 2;
+                Player.Arm -= 2;
+                if (drop == 2)
+                {
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                }
+            }
+            else if (Player.attack && pCombat.Axe.activeSelf)
+            {
+                Debug.Log("CHOP_AXE");
+                drop = Random.Range(0, 3);
+                health -= 4;
+                if (drop == 2)
+                {
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                }
+            }
+            else if (Player.attack && pCombat.Pickaxe.activeSelf)
+            {
+                Debug.Log("CHOP_AXE");
+                drop = Random.Range(0, 3);
+                health -= 3;
+                if (drop == 2)
+                {
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                }
             }
         }
-        else if (Player.attack && pCombat.Pickaxe.activeSelf)
+        else if (Player.Arm < 5)
         {
-            Debug.Log("CHOP_AXE");
-            drop = Random.Range(0,3);
-            health -= 4;
-            if (drop == 2)
+            if (Player.attack && Player.unarm)
             {
-                Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                Debug.Log("CHOP_Hand");
+                drop = Random.Range(0, 5);
+                health -= 1;
+                Player.Arm -= 2;
+                if (drop == 2)
+                {
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                }
+            }
+            else if (Player.attack && pCombat.Axe.activeSelf)
+            {
+                Debug.Log("CHOP_AXE");
+                drop = Random.Range(0, 3);
+                health -= 3;
+                if (drop == 2)
+                {
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                }
+            }
+            else if (Player.attack && pCombat.Pickaxe.activeSelf)
+            {
+                Debug.Log("CHOP_AXE");
+                drop = Random.Range(0, 3);
+                health -= 2;
+                if (drop == 2)
+                {
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                }
             }
         }
         
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            Debug.Log("PLAYER");
-        }
+        
     }
 }

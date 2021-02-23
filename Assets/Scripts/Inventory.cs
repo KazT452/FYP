@@ -87,6 +87,8 @@ public class Inventory : MonoBehaviour
         slotStack[1] += 2;
         yourInventory[2] = Database.itemList[3];
         slotStack[2] += 5;
+        yourInventory[3] = Database.itemList[2];
+        slotStack[3] += 3;
         //Cooking items in database
         firstCookableItemId = 5;
         lastCookableItemId = 5;

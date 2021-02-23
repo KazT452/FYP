@@ -9680,8 +9680,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7bcfe4908db834479d2ce07a06f745f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  daysManager: {fileID: 0}
-  player: {fileID: 0}
+  daysManager: {fileID: 1602378862}
+  player: {fileID: 1451111572}
   sun: {fileID: 705507994}
   secondsInFullDay: 360
   currentTimeofDay: 0.713

@@ -11,7 +11,7 @@ public class DayNightSystem : MonoBehaviour
     [SerializeField] private Light sun;
     [SerializeField] private float secondsInFullDay = 120f;
 
-    [Range(0, 1)] [SerializeField] private float currentTimeofDay = 0;
+    [Range(0, 1)] public float currentTimeofDay = 0;
     private float timeMultiplier = 1f;
     private float sunInitialIntensity;
     //Near night reminder
@@ -21,7 +21,7 @@ public class DayNightSystem : MonoBehaviour
     void Start()
     {
         daysManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<DaysManager>();
-        player = GameObject.FindGameObjectWithTag("GameController").GetComponent<Player>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         sunInitialIntensity = sun.intensity;
         currentTimeofDay = 0.25f;
     }
@@ -55,7 +55,7 @@ public class DayNightSystem : MonoBehaviour
             NightTeller.text = " ";
         }
 
-        if (currentTimeofDay >= 0.99f)
+        if (currentTimeofDay >= 0.95f)
         {
             if (player.enterSafePoint)
             {

@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public UIController uiControl;
     public DaysManager daysManager;
     public Inventory inventory;
+    public DayNightSystem dnSystem;
     public Vector3 revivePoint;
     public static float Head, Body,Arm,Legs;
     private enum Weapon { Hand, Knife, Axe };
@@ -136,14 +137,14 @@ public class Player : MonoBehaviour
                 if (Input.GetButtonDown("Fire1") && !anim.GetBool("Unarm"))
                 {
                     anim.Play("wp_Attk");
-                    Stamina -= 3f;
+                    Stamina -= 3f*StaminaDecrease;
                     attack = true;
 
                 }
                 else if (Input.GetButtonDown("Fire1") && anim.GetBool("Unarm"))
                 {
                     anim.Play("hd_Attk");
-                    Stamina -= 1.5f;
+                    Stamina -= 1.5f*StaminaDecrease;
                     attack = true;
                 }
 
@@ -280,11 +281,19 @@ public class Player : MonoBehaviour
         }
         else if (enterSave)
         {
-            msgBox.SetActive(true);
-            msgBoxText.text = "Press E to Sleep";
-            if (Input.GetKeyDown(KeyCode.E))
+            if (dnSystem.currentTimeofDay <= 0.95f && dnSystem.currentTimeofDay >= 0.75f)
             {
-                daysManager.Sleep(true);
+                msgBox.SetActive(true);
+                msgBoxText.text = "Press E to Sleep";
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    daysManager.Sleep(true);
+                }
+            }
+            else
+            {
+                msgBox.SetActive(true);
+                msgBoxText.text = "Can't Sleep, Not Night Yet";
             }
         }
         else

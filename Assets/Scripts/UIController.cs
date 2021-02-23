@@ -96,7 +96,7 @@ public class UIController : MonoBehaviour
             }
         }
 
-        if (!craftingisClosed || !inventoryClosed||!cookingisClosed||!questisClosed|| pauseGame)
+        if (!craftingisClosed || !inventoryClosed||!cookingisClosed||!questisClosed|| pauseGame||player.Dead)
         {
             FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = false;
             Cursor.lockState = CursorLockMode.None;

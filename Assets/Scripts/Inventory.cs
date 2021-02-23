@@ -53,6 +53,8 @@ public class Inventory : MonoBehaviour
 
     public TextMeshProUGUI[] craftingText;
 
+    public GameObject craftBtn;
+
     public bool craft;
 
     //cooking
@@ -68,6 +70,8 @@ public class Inventory : MonoBehaviour
 
     public TextMeshProUGUI cookedItemName;
     public TextMeshProUGUI[] cookingText;
+
+    public GameObject cookBtn;
 
     public bool cook;
 
@@ -160,27 +164,24 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < slotsNumber; i++)
         {
-            qSlotSprite[0] = Database.itemList[6].itemSprite;
-
             if (yourInventory[i].id == 6)
             {
                 qSlot[0].sprite = yourInventory[i].itemSprite;
                 break;
             }
-            else if (i == slotsNumber)
+            else
             {
                 qSlot[0].sprite = Database.itemList[0].itemSprite;
             }
         }
         for (int i = 0; i < slotsNumber; i++)
         {
-            qSlotSprite[1] = Database.itemList[7].itemSprite;
             if (yourInventory[i].id == 7)
             {
                 qSlot[1].sprite = yourInventory[i].itemSprite;
                 break;
             }
-            else if (i == slotsNumber)
+            else
             {
                 qSlot[1].sprite = Database.itemList[0].itemSprite;
             }
@@ -321,6 +322,45 @@ public class Inventory : MonoBehaviour
         craftingText[1].text = "" + Database.itemList[craftableItemId].q2;
         craftingText[2].text = "" + Database.itemList[craftableItemId].q3;
 
+        int craftA = 0;
+        int craftB = 0;
+        int craftC = 0;
+
+        for (int i = 0; i < slotsNumber; i++)
+        {
+            if (yourInventory[i].id == Database.itemList[craftableItemId].n1)
+            {
+                craftA += slotStack[i];
+            }
+        }
+
+        for (int i = 0; i < slotsNumber; i++)
+        {
+            if (yourInventory[i].id == Database.itemList[craftableItemId].n2)
+            {
+                craftB += slotStack[i];
+            }
+        }
+
+        for (int i = 0; i < slotsNumber; i++)
+        {
+            if (yourInventory[i].id == Database.itemList[craftableItemId].n3)
+            {
+                craftC += slotStack[i];
+            }
+        }
+
+        if (craftA >= Database.itemList[craftableItemId].q1 && craftB >= Database.itemList[craftableItemId].q2 && craftC >= Database.itemList[craftableItemId].q3)
+        {
+            craft = true;
+            craftBtn.SetActive(true);
+        }
+        else
+        {
+            craft = false;
+            craftBtn.SetActive(false);
+        }
+
         //Cooking
         cookedItemName.text = "" + Database.itemList[cookableItemId].name;
 
@@ -335,6 +375,43 @@ public class Inventory : MonoBehaviour
 
         cookingText[0].text = "" + Database.itemList[cookableItemId].q1;
         cookingText[1].text = "" + Database.itemList[cookableItemId].q2;
+
+        int cookA = 0;
+        int cookB = 0;
+
+        for (int i = 0; i < slotsNumber; i++)
+        {
+            if (yourInventory[i].id == Database.itemList[cookableItemId].n1)
+            {
+                cookA += slotStack[i];
+            }
+        }
+
+        for (int i = 0; i < slotsNumber; i++)
+        {
+            if (yourInventory[i].id == Database.itemList[cookableItemId].n2)
+            {
+                cookB += slotStack[i];
+            }
+        }
+
+
+
+
+
+
+
+
+        if (cookA >= Database.itemList[cookableItemId].q1 && cookB >= Database.itemList[cookableItemId].q2)
+        {
+            cook = true;
+            cookBtn.SetActive(true);
+        }
+        else
+        {
+            cook = false;
+            cookBtn.SetActive(false);
+        }
     }
 
     public void StartDrag(Image slotX)
@@ -673,11 +750,14 @@ public class Inventory : MonoBehaviour
 
         if (a >= Database.itemList[cookableItemId].q1 && b >= Database.itemList[cookableItemId].q2)
         {
+            Debug.Log("cancook");
             cook = true;
+            cookBtn.SetActive(true);
         }
         else
         {
             cook = false;
+            cookBtn.SetActive(false);
         }
 
 

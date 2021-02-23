@@ -13,6 +13,7 @@ TagManager:
   - Stone
   - SavePoint
   - SafeArea
+  - Tutorial
   layers:
   - Default
   - TransparentFX

@@ -29,7 +29,7 @@ public class Tree : MonoBehaviour
         {
             for(int i = 0; i <= 2; i++)
             {
-                Instantiate(stick, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z),Quaternion.identity);
+                Instantiate(stick, new Vector3(gameObject.transform.position.x+i, gameObject.transform.position.y+i, gameObject.transform.position.z+i),Quaternion.identity);
             }
             gameObject.SetActive(false);
         }
@@ -49,17 +49,17 @@ public class Tree : MonoBehaviour
                 Player.Arm -= 2;
                 if (drop == 2)
                 {
-                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y+3, gameObject.transform.position.z + 5), Quaternion.identity);
                 }
             }
             else if (Player.attack && pCombat.Axe.activeSelf)
             {
-                Debug.Log("CHOP_AXE");
+
                 drop = Random.Range(0, 3);
                 health -= 5;
                 if (drop == 2)
                 {
-                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y+3, gameObject.transform.position.z + 5), Quaternion.identity);
                 }
             }
             else if (Player.attack && pCombat.Pickaxe.activeSelf)
@@ -69,7 +69,7 @@ public class Tree : MonoBehaviour
                 health -= 4;
                 if (drop == 2)
                 {
-                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y+3, gameObject.transform.position.z + 5), Quaternion.identity);
                 }
             }
         }
@@ -83,7 +83,7 @@ public class Tree : MonoBehaviour
                 Player.Arm -= 2;
                 if (drop == 2)
                 {
-                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y+3, gameObject.transform.position.z + 5), Quaternion.identity);
                 }
             }
             else if (Player.attack && pCombat.Axe.activeSelf)
@@ -93,7 +93,7 @@ public class Tree : MonoBehaviour
                 health -= 4;
                 if (drop == 2)
                 {
-                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + 3, gameObject.transform.position.z + 5), Quaternion.identity);
                 }
             }
             else if (Player.attack && pCombat.Pickaxe.activeSelf)
@@ -103,7 +103,7 @@ public class Tree : MonoBehaviour
                 health -= 3;
                 if (drop == 2)
                 {
-                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + 3, gameObject.transform.position.z + 5), Quaternion.identity);
                 }
             }
         }
@@ -117,7 +117,7 @@ public class Tree : MonoBehaviour
                 Player.Arm -= 2;
                 if (drop == 2)
                 {
-                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + 3, gameObject.transform.position.z + 5), Quaternion.identity);
                 }
             }
             else if (Player.attack && pCombat.Axe.activeSelf)
@@ -127,7 +127,7 @@ public class Tree : MonoBehaviour
                 health -= 3;
                 if (drop == 2)
                 {
-                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + 3, gameObject.transform.position.z + 5), Quaternion.identity);
                 }
             }
             else if (Player.attack && pCombat.Pickaxe.activeSelf)
@@ -137,7 +137,7 @@ public class Tree : MonoBehaviour
                 health -= 2;
                 if (drop == 2)
                 {
-                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z + 2), Quaternion.identity);
+                    Instantiate(stick, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + 3, gameObject.transform.position.z + 5), Quaternion.identity);
                 }
             }
         }

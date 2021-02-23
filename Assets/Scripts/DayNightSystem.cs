@@ -6,6 +6,8 @@ using TMPro;
 
 public class DayNightSystem : MonoBehaviour
 {
+    public DaysManager daysManager;
+    public Player player;
     [SerializeField] private Light sun;
     [SerializeField] private float secondsInFullDay = 120f;
 
@@ -18,6 +20,8 @@ public class DayNightSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        daysManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<DaysManager>();
+        player = GameObject.FindGameObjectWithTag("GameController").GetComponent<Player>();
         sunInitialIntensity = sun.intensity;
         currentTimeofDay = 0.25f;
     }
@@ -42,9 +46,25 @@ public class DayNightSystem : MonoBehaviour
         {
             NightTeller.text = "THE NIGHT IS HERE!!\r\nReturn NOW!!!";
         }
+        else if (currentTimeofDay >= 0.9f)
+        {
+            NightTeller.text = "THE NIGHT IS ENDING!!\r\nReturn NOW!!!";
+        }
         else
         {
             NightTeller.text = " ";
+        }
+
+        if (currentTimeofDay >= 0.99f)
+        {
+            if (player.enterSafePoint)
+            {
+                daysManager.Sleep(true);
+            }
+            else
+            {
+                daysManager.Sleep(false);
+            }
         }
     }
 

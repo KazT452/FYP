@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 using TMPro;
 
 public class DaysManager : MonoBehaviour
@@ -11,6 +12,7 @@ public class DaysManager : MonoBehaviour
     public DayNightSystem dayNightSystem;
     public GameObject eyelidScreen;
     public GameObject diedText;
+    public GameObject reviveBtn;
     public bool sleep;
     // Start is called before the first frame update
     void Start()
@@ -52,7 +54,7 @@ public class DaysManager : MonoBehaviour
                 Player.Arm += 3;
                 Player.Legs += 3;
             }
-
+            //For future version after certain missions
             else
             {
                 eyelidScreen.SetActive(true);
@@ -67,9 +69,13 @@ public class DaysManager : MonoBehaviour
         }        
     }
 
-    IEnumerator WakeUp()
+    public IEnumerator WakeUp()
     {
         yield return new WaitForSeconds(2f);
+        player.Dead = false;
         eyelidScreen.SetActive(false);
+        diedText.SetActive(false);
+        FirstPersonController FPS = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
+        FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = true;
     }
 }

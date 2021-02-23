@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
 {
     public UIController uiControl;
     public DaysManager daysManager;
+    public Inventory inventory;
+    public Vector3 revivePoint;
     public static float Head, Body,Arm,Legs;
     private enum Weapon { Hand, Knife, Axe };
     public List<GameObject> QuickItem = new List<GameObject>();
@@ -27,10 +29,14 @@ public class Player : MonoBehaviour
     public static Animator anim;
     public bool enterCraft, enterCook, enterQuest, enterSave;
     public bool enterSafePoint;
+    public GameObject Tutorial;
 
     // Start is called before the first frame update
     void Start()
     {
+        revivePoint = transform.position;
+        inventory = transform.GetComponent<Inventory>();
+
         //Collision = false
         enterCraft = false;
         enterCook = false;
@@ -65,12 +71,18 @@ public class Player : MonoBehaviour
         staminaSlider.value = maxStamina;
         HealthDecreaseRate = 1f;
         HungerDecreaseRate = 5f;
-        UpdateHealth();
+        UpdateSlider();
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateSlider();
+        HealthPenalty();
+        if (Health <= 0)
+        {
+            Die();
+        }
         //Animator Settings
         anim.SetBool("Attack", attack);
         anim.SetBool("Unarm", unarm);
@@ -117,24 +129,27 @@ public class Player : MonoBehaviour
                 }
             }
         }
-
-        if (!attack)
+        if (Stamina > 1)
         {
-            if (Input.GetButtonDown("Fire1") && !anim.GetBool("Unarm"))
+            if (!attack)
             {
-                anim.Play("wp_Attk");
-                attack = true;
+                if (Input.GetButtonDown("Fire1") && !anim.GetBool("Unarm"))
+                {
+                    anim.Play("wp_Attk");
+                    Stamina -= 3f;
+                    attack = true;
+
+                }
+                else if (Input.GetButtonDown("Fire1") && anim.GetBool("Unarm"))
+                {
+                    anim.Play("hd_Attk");
+                    Stamina -= 1.5f;
+                    attack = true;
+                }
 
             }
-            else if (Input.GetButtonDown("Fire1") && anim.GetBool("Unarm"))
-            {
-                anim.Play("hd_Attk");
-                attack = true;
-            }
-           
-        }        
-        UpdateHealth();
-        HealthPenalty();
+        }         
+        
         //Health Controller
         if (hungerSlider.value <= 0 && thristSlider.value <= 0)
         {
@@ -279,7 +294,7 @@ public class Player : MonoBehaviour
         }               
     }
 
-    public void UpdateHealth()
+    public void UpdateSlider()
     {
         Health = Head + Body + Arm + Legs;
         headSlider.value = Head;
@@ -289,16 +304,7 @@ public class Player : MonoBehaviour
         healthSlider.value = Health;
         hungerSlider.value = Hunger;
         thristSlider.value = Thrist;
-    }
-
-    public void UpdateHunger()
-    {
-
-    }
-
-    private void Attack()
-    {
-
+        staminaSlider.value = Stamina;
     }
 
     private void HealthPenalty()
@@ -351,25 +357,25 @@ public class Player : MonoBehaviour
             FPS.m_RunSpeed = 20;
             FPS.m_WalkSpeed = 10;
             hpPenaltyBox.text = " ";
-
+        }
+        if (Hunger > maxHunger)
+        {
+            hpPenaltyBox.text = "Overeat,!!";
         }
     }
    
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.tag == "CookingStation")
-        {
-            
+        {            
             enterCook= true;
         }
         else if (collision.gameObject.tag == "CraftingStation")
-        {
-         
+        {         
             enterCraft = true;
         }
         else if (collision.gameObject.tag == "QuestStation")
-        {
-          
+        {          
             enterQuest = true;
         }
         if (collision.gameObject.tag == "SavePoint")
@@ -379,6 +385,10 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "SafeArea")
         {
             enterSafePoint = true;
+        }
+        if (collision.tag == "Tutorial")
+        {
+            Tutorial.SetActive(true);
         }
     }
 
@@ -406,13 +416,38 @@ public class Player : MonoBehaviour
         {
             enterSafePoint = false;
         }
+        if (other.tag == "Tutorial")
+        {
+            Tutorial.SetActive(false);
+        }
     }
 
-
+    public void Revive()
+    {
+        daysManager.reviveBtn.SetActive(false);
+        StartCoroutine(daysManager.WakeUp());
+        Head = 20;
+        Body = 20;
+        Arm = 30;
+        Legs = 30;
+    }
 
 
     private void Die()
     {
         Dead = true;
+        if (Dead)
+        {
+            FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = false;
+            transform.position = revivePoint;
+            for (int i = 0; i < inventory.slotsNumber; i++)
+            {
+                inventory.yourInventory[i] = Database.itemList[0];
+                inventory.slotStack[i] = 0;
+            }
+            daysManager.eyelidScreen.SetActive(true);
+            daysManager.diedText.SetActive(true);
+            daysManager.reviveBtn.SetActive(true);
+        }       
     }
 }

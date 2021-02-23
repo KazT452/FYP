@@ -8,6 +8,7 @@ using TMPro;
 public class Player : MonoBehaviour
 {
     public UIController uiControl;
+    public DaysManager daysManager;
     public static float Head, Body,Arm,Legs;
     private enum Weapon { Hand, Knife, Axe };
     public List<GameObject> QuickItem = new List<GameObject>();
@@ -24,12 +25,19 @@ public class Player : MonoBehaviour
     public FirstPersonController FPS;
     public static bool walk, run, unarm, axe, p_Axe,attack;
     public static Animator anim;
-    public bool enterCraft, enterCook, enterQuest;
+    public bool enterCraft, enterCook, enterQuest, enterSave;
     public bool enterSafePoint;
 
     // Start is called before the first frame update
     void Start()
     {
+        //Collision = false
+        enterCraft = false;
+        enterCook = false;
+        enterQuest = false;
+        enterSave = false;
+        enterSafePoint = false;
+
         attack = false;
         unarm = true;
         anim = transform.GetComponentInChildren<Animator>();
@@ -254,7 +262,15 @@ public class Player : MonoBehaviour
                     uiControl.questisClosed = false;
                 }
             }
-
+        }
+        else if (enterSave)
+        {
+            msgBox.SetActive(true);
+            msgBoxText.text = "Press E to Sleep";
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                daysManager.Sleep(true);
+            }
         }
         else
         {
@@ -356,7 +372,11 @@ public class Player : MonoBehaviour
           
             enterQuest = true;
         }
-        if (collision.gameObject.tag == "Safepoint")
+        if (collision.gameObject.tag == "SavePoint")
+        {
+            enterSave = true;
+        }
+        if (collision.gameObject.tag == "SafeArea")
         {
             enterSafePoint = true;
         }
@@ -378,7 +398,11 @@ public class Player : MonoBehaviour
         {
             enterQuest = false;
         }
-        if (other.gameObject.tag == "Safepoint")
+        if (other.gameObject.tag == "SavePoint")
+        {
+            enterSave = false;
+        }
+        if (other.gameObject.tag == "SafeArea")
         {
             enterSafePoint = false;
         }

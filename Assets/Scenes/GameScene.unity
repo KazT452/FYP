@@ -3727,7 +3727,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 567772436}
         m_MethodName: CancelHeal
         m_Mode: 1
         m_Arguments:
@@ -4943,7 +4943,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 567772436}
         m_MethodName: HealBody
         m_Mode: 1
         m_Arguments:
@@ -5207,7 +5207,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 567772436}
         m_MethodName: HealHead
         m_Mode: 1
         m_Arguments:
@@ -8092,7 +8092,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 32459d03038e2074ca023162add1a0bc,
         type: 3}
       propertyPath: m_TagString
-      value: SavePoint
+      value: SafeArea
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32459d03038e2074ca023162add1a0bc, type: 3}
@@ -8126,7 +8126,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2258370131159463500, guid: 32459d03038e2074ca023162add1a0bc, type: 3}
 --- !u!1 &585983629
@@ -11229,7 +11229,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 567772436}
         m_MethodName: HealArm
         m_Mode: 1
         m_Arguments:
@@ -12375,7 +12375,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 567772436}
         m_MethodName: HealLeg
         m_Mode: 1
         m_Arguments:
@@ -23399,6 +23399,7 @@ MonoBehaviour:
   - {x: 408.68524, y: 0.86895275, z: 1098.8342}
   - {x: 643.8824, y: 0.9967303, z: 471.8133}
   - {x: 923.3984, y: 1.1993775, z: 552.93085}
+  herbSpawnedPos: []
   terrain: {fileID: 15600000, guid: 89631bc097134ac4eb8f9adaadf2857c, type: 2}
   treesCollection: {fileID: 43813983}
   herbsCollection: {fileID: 1946462388}
@@ -30028,6 +30029,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Simplebed
       objectReference: {fileID: 0}
+    - target: {fileID: 4612753434485406499, guid: bb2d05c41307721499c1151634d7d9dd,
+        type: 3}
+      propertyPath: m_TagString
+      value: SavePoint
+      objectReference: {fileID: 0}
     - target: {fileID: 5424614766629314969, guid: bb2d05c41307721499c1151634d7d9dd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -30269,12 +30275,12 @@ PrefabInstance:
     - target: {fileID: 4317153693500772520, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
         type: 3}
       propertyPath: far clip plane
-      value: 200
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 4317153693502377640, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 234
+      value: 45.1
       objectReference: {fileID: 0}
     - target: {fileID: 4317153693502377640, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
         type: 3}
@@ -30284,27 +30290,27 @@ PrefabInstance:
     - target: {fileID: 4317153693502377640, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 434
+      value: 258.7
       objectReference: {fileID: 0}
     - target: {fileID: 4317153693502377640, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4317153693502377640, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.3053629
       objectReference: {fileID: 0}
     - target: {fileID: 4317153693502377640, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4317153693502377640, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.95223606
       objectReference: {fileID: 0}
     - target: {fileID: 4317153693502377640, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
         type: 3}
@@ -30319,7 +30325,7 @@ PrefabInstance:
     - target: {fileID: 4317153693502377640, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 35.56
       objectReference: {fileID: 0}
     - target: {fileID: 4317153693502377640, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
         type: 3}
@@ -30401,6 +30407,11 @@ PrefabInstance:
       propertyPath: msgBoxText
       value: 
       objectReference: {fileID: 1590517467}
+    - target: {fileID: 4317153693757848261, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
+        type: 3}
+      propertyPath: daysManager
+      value: 
+      objectReference: {fileID: 1602378862}
     - target: {fileID: 4317153693757848266, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
         type: 3}
       propertyPath: uiControl

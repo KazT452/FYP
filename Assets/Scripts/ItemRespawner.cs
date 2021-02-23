@@ -68,17 +68,16 @@ public class ItemRespawner : MonoBehaviour
     {
         for (int i = 0; i < 5; i++)
         {
-                Debug.Log("YEET");
 
-            for (int k = 1; k < herbSpawnedPos.Count+2; k++)
+            for (int k = 1; k < herbSpawnedPos.Count+2; k+=2)
             {
                 RandomAgain:
                 int RandPos = Random.Range(0, herbPositions.Count);
                 if (herbSpawnedPos.Count > 0)
                 {
-                    if (k < herbSpawnedPos.Count + 1)
+                    if (k < herbSpawnedPos.Count)
                     {
-                        Debug.Log("??"+k);
+
                         if (herbPositions[RandPos] != herbSpawnedPos[k-1])
                         {
                             continue;
@@ -93,9 +92,9 @@ public class ItemRespawner : MonoBehaviour
                     {
                         if (herbPositions[RandPos] != herbSpawnedPos[herbSpawnedPos.Count-1])
                         {
-                            Debug.Log("SPWANN"+k);
                             Instantiate(herb, herbPositions[RandPos], Quaternion.identity);
                             herbSpawnedPos.Add(herbPositions[RandPos]);
+                            break;
                         }
                         else
                         {

@@ -79,6 +79,10 @@ public class Inventory : MonoBehaviour
         //testing
         yourInventory[0] = Database.itemList[6];
         slotStack[0] += 1;
+        yourInventory[1] = Database.itemList[4];
+        slotStack[1] += 2;
+        yourInventory[2] = Database.itemList[3];
+        slotStack[2] += 5;
         //Cooking items in database
         firstCookableItemId = 5;
         lastCookableItemId = 5;
@@ -251,7 +255,7 @@ public class Inventory : MonoBehaviour
             canHeal = false;
         }
 
-        if (canConsume == true && Input.GetButtonDown("Fire1"))
+        if (!canHeal && canConsume && Input.GetButtonDown("Fire1"))
         {
             Debug.Log("EAT");
             if (yourInventory[b] == Database.itemList[4])
@@ -286,9 +290,10 @@ public class Inventory : MonoBehaviour
             }
             
         }
-        else if (canConsume && canHeal && Input.GetMouseButtonDown(1))
+        else if (canConsume && canHeal && Input.GetButtonDown("Fire1"))
         {
-            uiControl.Inventory.SetActive(false);
+            Debug.Log("HEAL");
+            uiControl.Inventory.SetActive(true);
             uiControl.healSelect.SetActive(true);
 
         }
@@ -807,34 +812,38 @@ public class Inventory : MonoBehaviour
     }
     public void HealHead()
     {
-        if (slotStack[b] >0)
-        {
-            slotStack[b]--;
-            Player.Head += 5;
-        }
-        else
+        if (slotStack[b] ==1)
         {
             Player.Head += 5;
             yourInventory[b] = Database.itemList[0];
             slotStack[b] = 0;
             uiControl.healSelect.SetActive(false);
             uiControl.Inventory.SetActive(true);
+            
+        }
+        else
+        {
+            slotStack[b]--;
+            Player.Head += 5;
         }
     }
     public void HealBody()
     {
-        if (slotStack[b] >0)
+        if (slotStack[b] ==1)
         {
-            slotStack[b]--;
-            Player.Body += 5;
-        }
-        else
-        {
+            Debug.Log("consumefinish");
             Player.Body += 5;
             yourInventory[b] = Database.itemList[0];
             slotStack[b] = 0;
             uiControl.healSelect.SetActive(false);
             uiControl.Inventory.SetActive(true);
+           
+        }
+        else
+        {
+            Debug.Log("consume");
+            slotStack[b]--;
+            Player.Body += 5;
         }
     }
     public void HealArm()

@@ -17,6 +17,7 @@ public class DaysManager : MonoBehaviour
     {
         sleep = false;
         eyelidScreen.SetActive(false);
+        itemRespawner = transform.GetComponent<ItemRespawner>();
     }
 
     // Update is called once per frame
@@ -27,13 +28,21 @@ public class DaysManager : MonoBehaviour
 
     public void Sleep(bool alive)
     {
+        Debug.Log("SLEEP");
+        sleep = true;
         GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
         foreach(GameObject tree in trees)
         {
             tree.GetComponent<Tree>().dayOver += 1;
         }
+        GameObject[] boulders = GameObject.FindGameObjectsWithTag("Stone");
+        foreach(GameObject boulder in boulders)
+        {
+            boulder.GetComponent<Boulder>().daysOver += 1;
+        }
         if (sleep)
         {
+            itemRespawner.HerbSpawn();
             sleep = false;
             if (alive)
             {

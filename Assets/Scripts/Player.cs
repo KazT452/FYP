@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
     public bool enterCraft, enterCook, enterQuest, enterSave;
     public bool enterSafePoint;
     public GameObject Tutorial;
+    public bool tired = false;
+    public Animator statAnim;
 
     // Start is called before the first frame update
     void Start()
@@ -85,6 +87,7 @@ public class Player : MonoBehaviour
             Die();
         }
         //Animator Settings
+        statAnim.SetBool("Tired", tired);
         anim.SetBool("Attack", attack);
         anim.SetBool("Unarm", unarm);
         if (FPS.m_Input!= Vector2.zero)
@@ -350,7 +353,7 @@ public class Player : MonoBehaviour
             Arm -= (Time.deltaTime / HealthDecreaseRate * 3);
             Legs -= (Time.deltaTime / HealthDecreaseRate * 3);
         }
-        if ((Legs <= 10&&Legs>=1)||Hunger>=maxHunger)
+        if ((Legs <= 10&&Legs>=1)||Hunger>=maxHunger||tired)
         {
             FPS.m_RunSpeed = 8;
             FPS.m_WalkSpeed =4;
@@ -369,7 +372,21 @@ public class Player : MonoBehaviour
         }
         if (Hunger > maxHunger)
         {
-            hpPenaltyBox.text = "Overeat,!!";
+            hpPenaltyBox.text = "Overeat,reduced movement speed!!";
+        }
+        if (tired)
+        {
+            statAnim.enabled = true;
+            StaminaDecrease = 2;
+            if (Hunger > maxHunger)
+            {
+                tired = false;
+            }
+        }
+        else
+        {
+            statAnim.enabled = false;
+            StaminaDecrease = 1;
         }
     }
    

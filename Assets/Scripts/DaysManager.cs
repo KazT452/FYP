@@ -54,9 +54,9 @@ public class DaysManager : MonoBehaviour
                 Player.Arm += 3;
                 Player.Legs += 3;
             }
-            //For future version after certain missions
             else
             {
+                player.tired = true;
                 eyelidScreen.SetActive(true);
                 diedText.SetActive(true);
                 int deadDamage = Random.Range(0, 5);

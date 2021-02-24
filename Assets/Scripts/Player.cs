@@ -18,9 +18,9 @@ public class Player : MonoBehaviour
     public static float Health, Hunger, Thrist;
     public float Stamina, StaminaDecrease;
     public Slider staminaSlider;
-    public float maxHealth, maxThrist, maxHunger, maxStamina;
-    public float HealthDecreaseRate,HungerDecreaseRate, ThristDecreaseRate ;
-    public Slider healthSlider, thristSlider, hungerSlider, headSlider, bodySlider, armSlider, legSlider; 
+    public float maxHealth, maxHunger, maxStamina;
+    public float HealthDecreaseRate,HungerDecreaseRate ;
+    public Slider healthSlider, hungerSlider, headSlider, bodySlider, armSlider, legSlider; 
     public bool Dead;
     public TextMeshProUGUI hpPenaltyBox;
     public GameObject msgBox;
@@ -66,8 +66,6 @@ public class Player : MonoBehaviour
         armSlider.value = Arm;
         healthSlider.maxValue = maxHealth;
         healthSlider.value = maxHealth;
-        thristSlider.maxValue = maxThrist;
-        thristSlider.value = maxThrist;
         hungerSlider.maxValue = maxHunger;
         hungerSlider.value = maxHunger;
         staminaSlider.maxValue = maxStamina;
@@ -140,7 +138,7 @@ public class Player : MonoBehaviour
                 if (Input.GetButtonDown("Fire1") && !anim.GetBool("Unarm"))
                 {
                     anim.Play("wp_Attk");
-                    Stamina -= 3f*StaminaDecrease;
+                    Stamina -= 2f*StaminaDecrease;
                     attack = true;
 
                 }
@@ -155,15 +153,10 @@ public class Player : MonoBehaviour
         }         
         
         //Health Controller
-        if (hungerSlider.value <= 0 && thristSlider.value <= 0)
+        if (hungerSlider.value <= 0)
         {
             Body -= (Time.deltaTime / HealthDecreaseRate * 2);
             bodySlider.value -= (int)(Time.deltaTime / HealthDecreaseRate * 2);
-        }
-        else if (hungerSlider.value <= 0 || thristSlider.value <= 0)
-        {
-            Body -= (Time.deltaTime / HealthDecreaseRate);
-            bodySlider.value -=(Time.deltaTime / HealthDecreaseRate);
         }
         
         if (healthSlider.value <= 0||Head<=0)
@@ -187,23 +180,6 @@ public class Player : MonoBehaviour
         {
             hungerSlider.value = maxHunger;
             Hunger= maxHunger;
-        }
-
-        //Thrist Controller
-        if (Thrist >= 0)
-        {
-            thristSlider.value -= Time.deltaTime / ThristDecreaseRate;
-            Thrist-= Time.deltaTime / ThristDecreaseRate;
-        }
-        else if (Thrist <= 0)
-        {
-            thristSlider.value = 0;
-            Thrist= 0;
-        }
-        else if (Thrist>= maxThrist)
-        {
-            thristSlider.value = maxThrist;
-            Thrist= maxThrist;
         }
 
         //Stamina Controller
@@ -315,7 +291,6 @@ public class Player : MonoBehaviour
         legSlider.value = Legs;
         healthSlider.value = Health;
         hungerSlider.value = Hunger;
-        thristSlider.value = Thrist;
         staminaSlider.value = Stamina;
     }
 
@@ -325,10 +300,15 @@ public class Player : MonoBehaviour
         {
 
         }
-        if (Body <= 5)
+        if (Body <= 5||tired)
         {
             HealthDecreaseRate = 2f;
             HungerDecreaseRate = 10f;
+        }
+        else if (tired && Body <= 5)
+        {
+            HealthDecreaseRate = 2.5f;
+            HungerDecreaseRate = 15f;
         }
         else
         {
@@ -341,17 +321,11 @@ public class Player : MonoBehaviour
             Arm -= (Time.deltaTime / HealthDecreaseRate);
             Legs -= (Time.deltaTime / HealthDecreaseRate);
         }
-        else if (Body <= 0 && (hungerSlider.value <= 0 || thristSlider.value <= 0))
+        else if (Body <= 0 && (hungerSlider.value <= 0 ))
         {
             Head -= (Time.deltaTime / HealthDecreaseRate * 2);
             Arm -= (Time.deltaTime / HealthDecreaseRate * 2);
             Legs -= (Time.deltaTime / HealthDecreaseRate * 2);
-        }
-        else if (Body <= 0 && hungerSlider.value <= 0 && thristSlider.value <= 0)
-        {
-            Head -= (Time.deltaTime / HealthDecreaseRate * 3);
-            Arm -= (Time.deltaTime / HealthDecreaseRate * 3);
-            Legs -= (Time.deltaTime / HealthDecreaseRate * 3);
         }
         if ((Legs <= 10&&Legs>=1)||Hunger>=maxHunger||tired)
         {
@@ -456,6 +430,7 @@ public class Player : MonoBehaviour
         Body = 20;
         Arm = 30;
         Legs = 30;
+        Hunger = maxHunger;
     }
 
 

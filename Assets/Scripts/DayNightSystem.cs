@@ -29,6 +29,10 @@ public class DayNightSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            currentTimeofDay = 0.93f;
+        }
         UpdateSun();
 
         currentTimeofDay += (Time.deltaTime / secondsInFullDay) * timeMultiplier;

@@ -23,7 +23,6 @@ public class Tree : MonoBehaviour
         {
             dayOver = 0;
             health = 30;
-            gameObject.SetActive(true);
         }
         if (health <= 0)
         {
@@ -31,7 +30,7 @@ public class Tree : MonoBehaviour
             {
                 Instantiate(stick, new Vector3(gameObject.transform.position.x+i, gameObject.transform.position.y+i, gameObject.transform.position.z+i),Quaternion.identity);
             }
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 

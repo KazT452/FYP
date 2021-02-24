@@ -32,19 +32,11 @@ public class DaysManager : MonoBehaviour
     {
         Debug.Log("SLEEP");
         sleep = true;
-        GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
-        foreach(GameObject tree in trees)
-        {
-            tree.GetComponent<Tree>().dayOver += 1;
-        }
-        GameObject[] boulders = GameObject.FindGameObjectsWithTag("Stone");
-        foreach(GameObject boulder in boulders)
-        {
-            boulder.GetComponent<Boulder>().daysOver += 1;
-        }
         if (sleep)
         {
+            itemRespawner.TreeRockRespawn();
             itemRespawner.HerbSpawn();
+            Debug.Log(sleep);
             sleep = false;
             if (alive)
             {
@@ -53,6 +45,7 @@ public class DaysManager : MonoBehaviour
                 Player.Body += 3;
                 Player.Arm += 3;
                 Player.Legs += 3;
+                Player.Hunger -= 50;
             }
             else
             {
@@ -64,7 +57,9 @@ public class DaysManager : MonoBehaviour
                 Player.Body -= deadDamage;
                 Player.Arm -= deadDamage;
                 Player.Legs -= deadDamage;
+                Player.Hunger -= 100;
             }
+            dayNightSystem.currentTimeofDay = 0.23f;
             StartCoroutine(WakeUp());
         }        
     }

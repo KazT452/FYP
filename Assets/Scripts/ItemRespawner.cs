@@ -41,7 +41,7 @@ public class ItemRespawner : MonoBehaviour
         //}
         foreach (Vector3 treepos in tree_Positions)
         {
-            Instantiate(tree, treepos, Quaternion.identity,treesCollection.transform);
+            Instantiate(tree, treepos, Quaternion.identity);
         }
     }
 
@@ -49,19 +49,6 @@ public class ItemRespawner : MonoBehaviour
     void Update()
     {
 
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-
-    }
-
-    public void Spawn()
-    {
-        float posRandX = Random.Range(350f, 1750f);
-        float posRandZ = Random.Range(120f, 1720f);
-        float posRandY = Random.Range(1.4f, 3f);
-        Instantiate(herb, new Vector3(posRandX, posRandY, posRandZ), Quaternion.identity);
     }
 
     public void HerbSpawn()
@@ -106,6 +93,43 @@ public class ItemRespawner : MonoBehaviour
                 {
                     Instantiate(herb, herbPositions[RandPos], Quaternion.identity);
                     herbSpawnedPos.Add(herbPositions[RandPos]);
+                }
+            }
+        }
+    }
+
+    public void TreeRockRespawn()
+    {
+        GameObject[] boulders = GameObject.FindGameObjectsWithTag("Stone");
+        foreach (Vector3 boudlerPos in boudler_positions)
+        {
+            for(int i =0; i < boulders.Length; i++)
+            {
+                if (boudlerPos == boulders[i].transform.position)
+                {
+                    break;
+                }
+                else if (i == boulders.Length - 1)
+                {
+                    Debug.Log("SpawnRock");
+                    Instantiate(boulder, boudlerPos, Quaternion.identity);
+                }
+            }
+        }
+        GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
+        foreach (Vector3 treePos in tree_Positions)
+        {
+            for (int i = 0; i < trees.Length; i++)
+            {
+                if (treePos == trees[i].transform.position)
+                {
+                    Debug.Log("break");
+                    break;
+                }
+                else if (i == trees.Length - 1)
+                {
+                    Debug.Log("SpawnTree");
+                    Instantiate(tree, treePos, Quaternion.identity);
                 }
             }
         }

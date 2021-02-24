@@ -123,7 +123,6 @@ public class ItemRespawner : MonoBehaviour
             {
                 if (treePos == trees[i].transform.position)
                 {
-                    Debug.Log("break");
                     break;
                 }
                 else if (i == trees.Length - 1)

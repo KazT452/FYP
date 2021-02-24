@@ -10,6 +10,7 @@ public class UIController : MonoBehaviour
     public GameObject Inventory;
     public bool inventoryClosed;
     public GameObject healSelect;
+    public GameObject startDialog;
 
     //Crafting
     public GameObject Crafting;
@@ -96,7 +97,7 @@ public class UIController : MonoBehaviour
             }
         }
 
-        if (!craftingisClosed || !inventoryClosed||!cookingisClosed||!questisClosed|| pauseGame||player.Dead)
+        if (!craftingisClosed || !inventoryClosed||!cookingisClosed||!questisClosed|| pauseGame||player.Dead||startDialog.activeSelf)
         {
             FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = false;
             Cursor.lockState = CursorLockMode.None;

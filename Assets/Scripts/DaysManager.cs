@@ -34,6 +34,7 @@ public class DaysManager : MonoBehaviour
         sleep = true;
         if (sleep)
         {
+            player.revivePoint = player.transform.position;
             itemRespawner.TreeRockRespawn();
             itemRespawner.HerbSpawn();
             Debug.Log(sleep);
@@ -46,27 +47,28 @@ public class DaysManager : MonoBehaviour
                 Player.Arm += 3;
                 Player.Legs += 3;
                 Player.Hunger -= 50;
+                StartCoroutine(WakeUp(false));
             }
             else
             {
-                player.tired = true;
                 eyelidScreen.SetActive(true);
-                diedText.SetActive(true);
-                int deadDamage = Random.Range(0, 5);
+                int deadDamage = Random.Range(1, 5);
                 Player.Head -= deadDamage;
                 Player.Body -= deadDamage;
                 Player.Arm -= deadDamage;
                 Player.Legs -= deadDamage;
                 Player.Hunger -= 100;
+                StartCoroutine(WakeUp(true));
+
             }
             dayNightSystem.currentTimeofDay = 0.23f;
-            StartCoroutine(WakeUp());
         }        
     }
 
-    public IEnumerator WakeUp()
+    public IEnumerator WakeUp(bool tired)
     {
         yield return new WaitForSeconds(2f);
+        player.tired = tired;
         player.Dead = false;
         eyelidScreen.SetActive(false);
         diedText.SetActive(false);

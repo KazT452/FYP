@@ -425,7 +425,7 @@ public class Player : MonoBehaviour
     public void Revive()
     {
         daysManager.reviveBtn.SetActive(false);
-        StartCoroutine(daysManager.WakeUp());
+        StartCoroutine(daysManager.WakeUp(false));
         Head = 20;
         Body = 20;
         Arm = 30;

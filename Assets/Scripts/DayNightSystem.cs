@@ -29,10 +29,16 @@ public class DayNightSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L)&&Input.GetKeyDown(KeyCode.RightShift))
         {
-            currentTimeofDay = 0.93f;
+            currentTimeofDay = 0.74f;
         }
+        if (Input.GetKeyDown(KeyCode.M)&&Input.GetKeyDown(KeyCode.RightShift))
+        {
+            QuestDatabase.questList[1].complete = true;
+            Debug.Log("COMPETE");
+        }
+
         UpdateSun();
 
         currentTimeofDay += (Time.deltaTime / secondsInFullDay) * timeMultiplier;
@@ -46,9 +52,13 @@ public class DayNightSystem : MonoBehaviour
         {
             NightTeller.text = "The night is near!\r\nReturn to Cave!!!";
         }
-        else if (currentTimeofDay >= 0.74f && currentTimeofDay <= 0.75f)
+        else if (currentTimeofDay >= 0.74f && currentTimeofDay <= 0.75f&&!player.enterSafePoint)
         {
             NightTeller.text = "THE NIGHT IS HERE!!\r\nReturn NOW!!!";
+        }
+        else if (currentTimeofDay >= 0.74f && currentTimeofDay <= 0.75f&&player.enterSafePoint)
+        {
+            NightTeller.text = "THE NIGHT IS HERE!!\r\nStay in Shelter!!!";
         }
         else if (currentTimeofDay >= 0.9f)
         {
@@ -57,6 +67,14 @@ public class DayNightSystem : MonoBehaviour
         else
         {
             NightTeller.text = " ";
+        }
+
+        if (currentTimeofDay >= 0.8f)
+        {
+            if (!player.enterSafePoint)
+            {
+                daysManager.Sleep(false);
+            }
         }
 
         if (currentTimeofDay >= 0.95f)

@@ -17,7 +17,7 @@ public class ThisItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        thisItem[0] = Database.itemList[thisId];
+        thisItem[0] = ItemDatabase.itemList[thisId];
     }
 
     // Update is called once per frame

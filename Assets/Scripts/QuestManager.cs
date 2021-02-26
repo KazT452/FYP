@@ -45,21 +45,37 @@ public class QuestManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        for(int i = 1; i < QuestDatabase.questList.Count; i++)
+        {
+            if(QuestDatabase.questList[i].complete == false)
+            {
+                availableQuests[i-1].gameObject.SetActive(true);
+            }
+            else if(QuestDatabase.questList[i].complete == true && QuestDatabase.questList[i].repeatable == false)
+            {
+                availableQuests[i-1].gameObject.SetActive(false);
+            }
+            else if(QuestDatabase.questList[i].complete == true)
+            {
+                availableQuests[i-1].gameObject.SetActive(true);
+            }
+
+            if (QuestDatabase.questList[i].active)
+            {
+                activeQuests[i-1].gameObject.SetActive(true);
+            }
+            else
+            {
+                activeQuests[i-1].gameObject.SetActive(false);
+            }
+        }
         QuestChecker();
-        for (int i = 0; i < availableQuests.Count; i++)
-        {
-            availableQuests[i].onClick.AddListener(()=>ButtonOnClick(i));
-        }
-        for (int i = 0; i < activeQuests.Count; i++)
-        {
-            activeQuests[i].onClick.AddListener(()=>ButtonOnClick(i));
-        }
         questName.text = QuestDatabase.questList[activeQid].name;
         questDesc.text = QuestDatabase.questList[activeQid].description;
 
-        ItemNeededInQuestSprite[0] = Database.itemList[QuestDatabase.questList[activeQid].n1].itemSprite;
-        ItemNeededInQuestSprite[1] = Database.itemList[QuestDatabase.questList[activeQid].n2].itemSprite;
-        ItemNeededInQuestSprite[2] = Database.itemList[QuestDatabase.questList[activeQid].n3].itemSprite;
+        ItemNeededInQuestSprite[0] = ItemDatabase.itemList[QuestDatabase.questList[activeQid].n1].itemSprite;
+        ItemNeededInQuestSprite[1] = ItemDatabase.itemList[QuestDatabase.questList[activeQid].n2].itemSprite;
+        ItemNeededInQuestSprite[2] = ItemDatabase.itemList[QuestDatabase.questList[activeQid].n3].itemSprite;
 
         ItemNeededInQuest[0].sprite = ItemNeededInQuestSprite[0];
         ItemNeededInQuest[1].sprite = ItemNeededInQuestSprite[1];
@@ -69,7 +85,7 @@ public class QuestManager : MonoBehaviour
         itemText[1].text = "" + QuestDatabase.questList[activeQid].q2;
         itemText[2].text = "" + QuestDatabase.questList[activeQid].q3;
 
-        rewardedItemSprite[0] = Database.itemList[QuestDatabase.questList[activeQid].r1].itemSprite;
+        rewardedItemSprite[0] = ItemDatabase.itemList[QuestDatabase.questList[activeQid].r1].itemSprite;
 
         rewardedItem[0].sprite = rewardedItemSprite[0];
 
@@ -165,7 +181,7 @@ public class QuestManager : MonoBehaviour
                             recountA= inventory.slotStack[i] - inventory.maxStack;
                             inventory.slotStack[i] -= recountA;
                             i++;
-                            inventory.yourInventory[i] = Database.itemList[QuestDatabase.questList[activeQid].r1];
+                            inventory.yourInventory[i] = ItemDatabase.itemList[QuestDatabase.questList[activeQid].r1];
                             inventory.slotStack[i] += recountA;
                         }
                         i = inventory.slotsNumber;
@@ -184,7 +200,7 @@ public class QuestManager : MonoBehaviour
                             {
                                 totalA -= inventory.slotStack[j];
                                 inventory.slotStack[j] = 0;
-                                inventory.yourInventory[j] = Database.itemList[0];
+                                inventory.yourInventory[j] = ItemDatabase.itemList[0];
 
                             }
                         }
@@ -204,7 +220,7 @@ public class QuestManager : MonoBehaviour
                             {
                                 totalB -= inventory.slotStack[k];
                                 inventory.slotStack[k] = 0;
-                                inventory.yourInventory[k] = Database.itemList[0];
+                                inventory.yourInventory[k] = ItemDatabase.itemList[0];
 
                             }
                         }
@@ -224,7 +240,7 @@ public class QuestManager : MonoBehaviour
                             {
                                 totalC -= inventory.slotStack[l];
                                 inventory.slotStack[l] = 0;
-                                inventory.yourInventory[l] = Database.itemList[0];
+                                inventory.yourInventory[l] = ItemDatabase.itemList[0];
 
                             }
                         }
@@ -241,7 +257,7 @@ public class QuestManager : MonoBehaviour
             {
                 if (inventory.yourInventory[i].id == 0 && complete == true)
                 {
-                    inventory.yourInventory[i] = Database.itemList[QuestDatabase.questList[activeQid].r1];
+                    inventory.yourInventory[i] = ItemDatabase.itemList[QuestDatabase.questList[activeQid].r1];
 
                     inventory.slotStack[i] += QuestDatabase.questList[activeQid].qr1;
 
@@ -258,7 +274,7 @@ public class QuestManager : MonoBehaviour
                             {
                                 totalA -= inventory.slotStack[j];
                                 inventory.slotStack[j] = 0;
-                                inventory.yourInventory[j] = Database.itemList[0];
+                                inventory.yourInventory[j] = ItemDatabase.itemList[0];
 
                             }
                         }
@@ -278,7 +294,7 @@ public class QuestManager : MonoBehaviour
                             {
                                 totalB -= inventory.slotStack[k];
                                 inventory.slotStack[k] = 0;
-                                inventory.yourInventory[k] = Database.itemList[0];
+                                inventory.yourInventory[k] = ItemDatabase.itemList[0];
 
                             }
                         }
@@ -299,7 +315,7 @@ public class QuestManager : MonoBehaviour
                             {
                                 totalC -= inventory.slotStack[l];
                                 inventory.slotStack[l] = 0;
-                                inventory.yourInventory[l] = Database.itemList[0];
+                                inventory.yourInventory[l] = ItemDatabase.itemList[0];
 
                             }
                         }

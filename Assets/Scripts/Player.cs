@@ -385,6 +385,10 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "SafeArea")
         {
             enterSafePoint = true;
+            if (!QuestDatabase.questList[1].complete)
+            {
+                QuestDatabase.questList[1].complete = true;
+            }
         }
         if (collision.tag == "Tutorial")
         {
@@ -443,7 +447,7 @@ public class Player : MonoBehaviour
             transform.position = revivePoint;
             for (int i = 0; i < inventory.slotsNumber; i++)
             {
-                inventory.yourInventory[i] = Database.itemList[0];
+                inventory.yourInventory[i] = ItemDatabase.itemList[0];
                 inventory.slotStack[i] = 0;
             }
             daysManager.eyelidScreen.SetActive(true);

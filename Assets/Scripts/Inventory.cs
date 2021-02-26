@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
 {
     public UIController uiControl;
     public PlayerCombat pCombat;
+	public Player player;
 
     public List<Item> yourInventory = new List<Item>();
     public List<Item> draggedItem = new List<Item>();
@@ -80,15 +81,9 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //testing
-        yourInventory[0] = Database.itemList[6];
-        slotStack[0] += 1;
-        yourInventory[1] = Database.itemList[4];
-        slotStack[1] += 2;
-        yourInventory[2] = Database.itemList[3];
-        slotStack[2] += 5;
-        yourInventory[3] = Database.itemList[2];
-        slotStack[3] += 3;
+        yourInventory[2] = ItemDatabase.itemList[1];
+        slotStack[2] += 1;
+        player = transform.GetComponent<Player>();
         //Cooking items in database
         firstCookableItemId = 5;
         lastCookableItemId = 5;
@@ -104,7 +99,7 @@ public class Inventory : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (qSlot[0].sprite != Database.itemList[0].itemSprite)
+            if (qSlot[0].sprite != ItemDatabase.itemList[0].itemSprite)
             {
                 if (!pCombat.Axe.activeSelf)
                 {
@@ -120,7 +115,7 @@ public class Inventory : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            if (qSlot[1].sprite != Database.itemList[0].itemSprite)
+            if (qSlot[1].sprite != ItemDatabase.itemList[0].itemSprite)
             {
                 if (!pCombat.Pickaxe.activeSelf)
                 {
@@ -138,7 +133,7 @@ public class Inventory : MonoBehaviour
         {
             if (slotStack[i] == 0)
             {
-                yourInventory[i] = Database.itemList[0];
+                yourInventory[i] = ItemDatabase.itemList[0];
             }
         }
 
@@ -173,7 +168,7 @@ public class Inventory : MonoBehaviour
             }
             else
             {
-                qSlot[0].sprite = Database.itemList[0].itemSprite;
+                qSlot[0].sprite = ItemDatabase.itemList[0].itemSprite;
             }
         }
         for (int i = 0; i < slotsNumber; i++)
@@ -185,7 +180,7 @@ public class Inventory : MonoBehaviour
             }
             else
             {
-                qSlot[1].sprite = Database.itemList[0].itemSprite;
+                qSlot[1].sprite = ItemDatabase.itemList[0].itemSprite;
             }
         }
 
@@ -232,7 +227,7 @@ public class Inventory : MonoBehaviour
             {
                 if (yourInventory[i].id == 0 && PickUp.pick == true)
                 {
-                    yourInventory[i] = Database.itemList[n];
+                    yourInventory[i] = ItemDatabase.itemList[n];
                     slotStack[i] += 1;
                     PickUp.pick = false;
                 }
@@ -256,41 +251,45 @@ public class Inventory : MonoBehaviour
         else
         {
             canHeal = false;
-        }
-
+        }		
+		
         if (!canHeal && canConsume && Input.GetButtonDown("Fire1"))
         {
             Debug.Log("EAT");
-            if (yourInventory[b] == Database.itemList[4])
-            {
-                if (slotStack[b] == 1)
-                {
-                    Player.Body -= 3;
-                    Player.Hunger += 25;
-                    yourInventory[b] = Database.itemList[0];
-                    slotStack[b] = 0;
-                }
-                else
-                {
-                    slotStack[b]--;
-                    Player.Body -= 3;
-                    Player.Hunger += 25;
-                }
-            }
-            else if (yourInventory[b] == Database.itemList[5])
-            {
-                if (slotStack[b] == 1)
-                {
-                    Player.Hunger += 25;
-                    yourInventory[b] = Database.itemList[0];
-                    slotStack[b] = 0;
-                }
-                else
-                {
-                    slotStack[b]--;
-                    Player.Hunger += 25;
-                }
-            }
+			if(Player.Hunger< player.maxHunger)
+			{
+				if (yourInventory[b] == ItemDatabase.itemList[4])
+				{
+					if (slotStack[b] == 1)
+					{
+						Player.Body -= 3;
+						Player.Hunger += 25;
+						yourInventory[b] = ItemDatabase.itemList[0];
+						slotStack[b] = 0;
+					}
+					else
+					{
+						slotStack[b]--;
+						Player.Body -= 3;
+						Player.Hunger += 25;
+					}
+				}
+				else if (yourInventory[b] == ItemDatabase.itemList[5])
+				{
+					if (slotStack[b] == 1)
+					{
+						Player.Hunger += 25;
+						yourInventory[b] = ItemDatabase.itemList[0];
+						slotStack[b] = 0;
+					}
+					else
+					{
+						slotStack[b]--;
+						Player.Hunger += 25;
+					}
+				}			
+			}
+            
             
         }
         else if (canConsume && canHeal && Input.GetButtonDown("Fire1"))
@@ -307,22 +306,22 @@ public class Inventory : MonoBehaviour
         }
 
         //Crafting
-        craftedItemName.text = "" + Database.itemList[craftableItemId].name;
+        craftedItemName.text = "" + ItemDatabase.itemList[craftableItemId].name;
 
-        craftedItemSprite = Database.itemList[craftableItemId].itemSprite;
+        craftedItemSprite = ItemDatabase.itemList[craftableItemId].itemSprite;
         craftedItem.sprite = craftedItemSprite;
 
-        SlotInCraftingSprite[0] = Database.itemList[Database.itemList[craftableItemId].n1].itemSprite;
-        SlotInCraftingSprite[1] = Database.itemList[Database.itemList[craftableItemId].n2].itemSprite;
-        SlotInCraftingSprite[2] = Database.itemList[Database.itemList[craftableItemId].n3].itemSprite;
+        SlotInCraftingSprite[0] = ItemDatabase.itemList[ItemDatabase.itemList[craftableItemId].n1].itemSprite;
+        SlotInCraftingSprite[1] = ItemDatabase.itemList[ItemDatabase.itemList[craftableItemId].n2].itemSprite;
+        SlotInCraftingSprite[2] = ItemDatabase.itemList[ItemDatabase.itemList[craftableItemId].n3].itemSprite;
 
         SlotInCrafting[0].sprite = SlotInCraftingSprite[0];
         SlotInCrafting[1].sprite = SlotInCraftingSprite[1];
         SlotInCrafting[2].sprite = SlotInCraftingSprite[2];
 
-        craftingText[0].text = "" + Database.itemList[craftableItemId].q1;
-        craftingText[1].text = "" + Database.itemList[craftableItemId].q2;
-        craftingText[2].text = "" + Database.itemList[craftableItemId].q3;
+        craftingText[0].text = "" + ItemDatabase.itemList[craftableItemId].q1;
+        craftingText[1].text = "" + ItemDatabase.itemList[craftableItemId].q2;
+        craftingText[2].text = "" + ItemDatabase.itemList[craftableItemId].q3;
 
         int craftA = 0;
         int craftB = 0;
@@ -330,7 +329,7 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < slotsNumber; i++)
         {
-            if (yourInventory[i].id == Database.itemList[craftableItemId].n1)
+            if (yourInventory[i].id == ItemDatabase.itemList[craftableItemId].n1)
             {
                 craftA += slotStack[i];
             }
@@ -338,7 +337,7 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < slotsNumber; i++)
         {
-            if (yourInventory[i].id == Database.itemList[craftableItemId].n2)
+            if (yourInventory[i].id == ItemDatabase.itemList[craftableItemId].n2)
             {
                 craftB += slotStack[i];
             }
@@ -346,13 +345,13 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < slotsNumber; i++)
         {
-            if (yourInventory[i].id == Database.itemList[craftableItemId].n3)
+            if (yourInventory[i].id == ItemDatabase.itemList[craftableItemId].n3)
             {
                 craftC += slotStack[i];
             }
         }
 
-        if (craftA >= Database.itemList[craftableItemId].q1 && craftB >= Database.itemList[craftableItemId].q2 && craftC >= Database.itemList[craftableItemId].q3)
+        if (craftA >= ItemDatabase.itemList[craftableItemId].q1 && craftB >= ItemDatabase.itemList[craftableItemId].q2 && craftC >= ItemDatabase.itemList[craftableItemId].q3)
         {
             craft = true;
             craftBtn.SetActive(true);
@@ -364,26 +363,26 @@ public class Inventory : MonoBehaviour
         }
 
         //Cooking
-        cookedItemName.text = "" + Database.itemList[cookableItemId].name;
+        cookedItemName.text = "" + ItemDatabase.itemList[cookableItemId].name;
 
-        cookedItemSprite = Database.itemList[cookableItemId].itemSprite;
+        cookedItemSprite = ItemDatabase.itemList[cookableItemId].itemSprite;
         cookedItem.sprite = cookedItemSprite;
 
-        SlotinCookingSprite[0] = Database.itemList[Database.itemList[cookableItemId].n1].itemSprite;
-        SlotinCookingSprite[1] = Database.itemList[Database.itemList[cookableItemId].n2].itemSprite;
+        SlotinCookingSprite[0] = ItemDatabase.itemList[ItemDatabase.itemList[cookableItemId].n1].itemSprite;
+        SlotinCookingSprite[1] = ItemDatabase.itemList[ItemDatabase.itemList[cookableItemId].n2].itemSprite;
 
         SlotinCooking[0].sprite = SlotinCookingSprite[0];
         SlotinCooking[1].sprite = SlotinCookingSprite[1];
 
-        cookingText[0].text = "" + Database.itemList[cookableItemId].q1;
-        cookingText[1].text = "" + Database.itemList[cookableItemId].q2;
+        cookingText[0].text = "" + ItemDatabase.itemList[cookableItemId].q1;
+        cookingText[1].text = "" + ItemDatabase.itemList[cookableItemId].q2;
 
         int cookA = 0;
         int cookB = 0;
 
         for (int i = 0; i < slotsNumber; i++)
         {
-            if (yourInventory[i].id == Database.itemList[cookableItemId].n1)
+            if (yourInventory[i].id == ItemDatabase.itemList[cookableItemId].n1)
             {
                 cookA += slotStack[i];
             }
@@ -391,7 +390,7 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < slotsNumber; i++)
         {
-            if (yourInventory[i].id == Database.itemList[cookableItemId].n2)
+            if (yourInventory[i].id == ItemDatabase.itemList[cookableItemId].n2)
             {
                 cookB += slotStack[i];
             }
@@ -404,7 +403,7 @@ public class Inventory : MonoBehaviour
 
 
 
-        if (cookA >= Database.itemList[cookableItemId].q1 && cookB >= Database.itemList[cookableItemId].q2)
+        if (cookA >= ItemDatabase.itemList[cookableItemId].q1 && cookB >= ItemDatabase.itemList[cookableItemId].q2)
         {
             cook = true;
             cookBtn.SetActive(true);
@@ -464,7 +463,7 @@ public class Inventory : MonoBehaviour
                     if (slotStack[a] + slotStack[b] <= maxStack)
                     {
                         slotStack[b] = slotStack[a] + slotStack[b];
-                        yourInventory[a] = Database.itemList[0];
+                        yourInventory[a] = ItemDatabase.itemList[0];
                     }
                     else
                     {
@@ -512,7 +511,7 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < slotsNumber; i++)
         {
-            if (yourInventory[i].id == Database.itemList[craftableItemId].n1)
+            if (yourInventory[i].id == ItemDatabase.itemList[craftableItemId].n1)
             {
                 a += slotStack[i];
             }
@@ -520,7 +519,7 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < slotsNumber; i++)
         {
-            if (yourInventory[i].id == Database.itemList[craftableItemId].n2)
+            if (yourInventory[i].id == ItemDatabase.itemList[craftableItemId].n2)
             {
                 b += slotStack[i];
             }
@@ -528,7 +527,7 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < slotsNumber; i++)
         {
-            if (yourInventory[i].id == Database.itemList[craftableItemId].n3)
+            if (yourInventory[i].id == ItemDatabase.itemList[craftableItemId].n3)
             {
                 c += slotStack[i];
             }
@@ -540,7 +539,7 @@ public class Inventory : MonoBehaviour
 
 
 
-        if (a >= Database.itemList[craftableItemId].q1 && b >= Database.itemList[craftableItemId].q2 && c >= Database.itemList[craftableItemId].q3)
+        if (a >= ItemDatabase.itemList[craftableItemId].q1 && b >= ItemDatabase.itemList[craftableItemId].q2 && c >= ItemDatabase.itemList[craftableItemId].q3)
         {
             craft = true;
         }
@@ -555,9 +554,9 @@ public class Inventory : MonoBehaviour
 
         if (craft == true)
         {
-            a = Database.itemList[craftableItemId].q1;
-            b = Database.itemList[craftableItemId].q2;
-            c = Database.itemList[craftableItemId].q3;
+            a = ItemDatabase.itemList[craftableItemId].q1;
+            b = ItemDatabase.itemList[craftableItemId].q2;
+            c = ItemDatabase.itemList[craftableItemId].q3;
 
             for (int i = 0; i < slotsNumber; i++)
             {
@@ -575,7 +574,7 @@ public class Inventory : MonoBehaviour
 
                     for (int j = 0; j < slotsNumber; j++)
                     {
-                        if (yourInventory[j].id == Database.itemList[craftableItemId].n1 && a > 0)
+                        if (yourInventory[j].id == ItemDatabase.itemList[craftableItemId].n1 && a > 0)
                         {
                             if (slotStack[j] > a)
                             {
@@ -586,7 +585,7 @@ public class Inventory : MonoBehaviour
                             {
                                 a -= slotStack[j];
                                 slotStack[j] = 0;
-                                yourInventory[j] = Database.itemList[0];
+                                yourInventory[j] = ItemDatabase.itemList[0];
 
                             }
                         }
@@ -595,7 +594,7 @@ public class Inventory : MonoBehaviour
 
                     for (int k = 0; k < slotsNumber; k++)
                     {
-                        if (yourInventory[k].id == Database.itemList[craftableItemId].n2 && b > 0)
+                        if (yourInventory[k].id == ItemDatabase.itemList[craftableItemId].n2 && b > 0)
                         {
                             if (slotStack[k] > b)
                             {
@@ -606,7 +605,7 @@ public class Inventory : MonoBehaviour
                             {
                                 b -= slotStack[k];
                                 slotStack[k] = 0;
-                                yourInventory[k] = Database.itemList[0];
+                                yourInventory[k] = ItemDatabase.itemList[0];
 
                             }
                         }
@@ -615,7 +614,7 @@ public class Inventory : MonoBehaviour
 
                     for (int l = 0; l < slotsNumber; l++)
                     {
-                        if (yourInventory[l].id == Database.itemList[craftableItemId].n3 && c > 0)
+                        if (yourInventory[l].id == ItemDatabase.itemList[craftableItemId].n3 && c > 0)
                         {
                             if (slotStack[l] > c)
                             {
@@ -626,7 +625,7 @@ public class Inventory : MonoBehaviour
                             {
                                 c -= slotStack[l];
                                 slotStack[l] = 0;
-                                yourInventory[l] = Database.itemList[0];
+                                yourInventory[l] = ItemDatabase.itemList[0];
 
                             }
                         }
@@ -649,13 +648,13 @@ public class Inventory : MonoBehaviour
             {
                 if (yourInventory[i].id == 0 && craft == true)
                 {
-                    yourInventory[i] = Database.itemList[craftableItemId];
+                    yourInventory[i] = ItemDatabase.itemList[craftableItemId];
 
                     slotStack[i] += 1;
 
                     for (int j = 0; j < slotsNumber; j++)
                     {
-                        if (yourInventory[j].id == Database.itemList[craftableItemId].n1 && a > 0)
+                        if (yourInventory[j].id == ItemDatabase.itemList[craftableItemId].n1 && a > 0)
                         {
                             if (slotStack[j] > a)
                             {
@@ -666,7 +665,7 @@ public class Inventory : MonoBehaviour
                             {
                                 a -= slotStack[j];
                                 slotStack[j] = 0;
-                                yourInventory[j] = Database.itemList[0];
+                                yourInventory[j] = ItemDatabase.itemList[0];
 
                             }
                         }
@@ -675,7 +674,7 @@ public class Inventory : MonoBehaviour
 
                     for (int k = 0; k < slotsNumber; k++)
                     {
-                        if (yourInventory[k].id == Database.itemList[craftableItemId].n2 && b > 0)
+                        if (yourInventory[k].id == ItemDatabase.itemList[craftableItemId].n2 && b > 0)
                         {
                             if (slotStack[k] > b)
                             {
@@ -686,7 +685,7 @@ public class Inventory : MonoBehaviour
                             {
                                 b -= slotStack[k];
                                 slotStack[k] = 0;
-                                yourInventory[k] = Database.itemList[0];
+                                yourInventory[k] = ItemDatabase.itemList[0];
 
                             }
                         }
@@ -696,7 +695,7 @@ public class Inventory : MonoBehaviour
 
                     for (int l = 0; l < slotsNumber; l++)
                     {
-                        if (yourInventory[l].id == Database.itemList[craftableItemId].n3 && c > 0)
+                        if (yourInventory[l].id == ItemDatabase.itemList[craftableItemId].n3 && c > 0)
                         {
                             if (slotStack[l] > c)
                             {
@@ -707,7 +706,7 @@ public class Inventory : MonoBehaviour
                             {
                                 c -= slotStack[l];
                                 slotStack[l] = 0;
-                                yourInventory[l] = Database.itemList[0];
+                                yourInventory[l] = ItemDatabase.itemList[0];
 
                             }
                         }
@@ -729,7 +728,7 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < slotsNumber; i++)
         {
-            if (yourInventory[i].id == Database.itemList[cookableItemId].n1)
+            if (yourInventory[i].id == ItemDatabase.itemList[cookableItemId].n1)
             {
                 a += slotStack[i];
             }
@@ -737,7 +736,7 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < slotsNumber; i++)
         {
-            if (yourInventory[i].id == Database.itemList[cookableItemId].n2)
+            if (yourInventory[i].id == ItemDatabase.itemList[cookableItemId].n2)
             {
                 b += slotStack[i];
             }
@@ -750,7 +749,7 @@ public class Inventory : MonoBehaviour
 
 
 
-        if (a >= Database.itemList[cookableItemId].q1 && b >= Database.itemList[cookableItemId].q2)
+        if (a >= ItemDatabase.itemList[cookableItemId].q1 && b >= ItemDatabase.itemList[cookableItemId].q2)
         {
             Debug.Log("cancook");
             cook = true;
@@ -768,8 +767,8 @@ public class Inventory : MonoBehaviour
 
         if (cook == true)
         {
-            a = Database.itemList[cookableItemId].q1;
-            b = Database.itemList[cookableItemId].q2;
+            a = ItemDatabase.itemList[cookableItemId].q1;
+            b = ItemDatabase.itemList[cookableItemId].q2;
 
             for (int i = 0; i < slotsNumber; i++)
             {
@@ -787,7 +786,7 @@ public class Inventory : MonoBehaviour
 
                     for (int j = 0; j < slotsNumber; j++)
                     {
-                        if (yourInventory[j].id == Database.itemList[cookableItemId].n1 && a > 0)
+                        if (yourInventory[j].id == ItemDatabase.itemList[cookableItemId].n1 && a > 0)
                         {
                             if (slotStack[j] > a)
                             {
@@ -798,7 +797,7 @@ public class Inventory : MonoBehaviour
                             {
                                 a -= slotStack[j];
                                 slotStack[j] = 0;
-                                yourInventory[j] = Database.itemList[0];
+                                yourInventory[j] = ItemDatabase.itemList[0];
 
                             }
                         }
@@ -807,7 +806,7 @@ public class Inventory : MonoBehaviour
 
                     for (int k = 0; k < slotsNumber; k++)
                     {
-                        if (yourInventory[k].id == Database.itemList[cookableItemId].n2 && b > 0)
+                        if (yourInventory[k].id == ItemDatabase.itemList[cookableItemId].n2 && b > 0)
                         {
                             if (slotStack[k] > b)
                             {
@@ -818,7 +817,7 @@ public class Inventory : MonoBehaviour
                             {
                                 b -= slotStack[k];
                                 slotStack[k] = 0;
-                                yourInventory[k] = Database.itemList[0];
+                                yourInventory[k] = ItemDatabase.itemList[0];
 
                             }
                         }
@@ -840,13 +839,13 @@ public class Inventory : MonoBehaviour
             {
                 if (yourInventory[i].id == 0 && cook == true)
                 {
-                    yourInventory[i] = Database.itemList[cookableItemId];
+                    yourInventory[i] = ItemDatabase.itemList[cookableItemId];
 
                     slotStack[i] += 1;
 
                     for (int j = 0; j < slotsNumber; j++)
                     {
-                        if (yourInventory[j].id == Database.itemList[cookableItemId].n1 && a > 0)
+                        if (yourInventory[j].id == ItemDatabase.itemList[cookableItemId].n1 && a > 0)
                         {
                             if (slotStack[j] > a)
                             {
@@ -857,7 +856,7 @@ public class Inventory : MonoBehaviour
                             {
                                 a -= slotStack[j];
                                 slotStack[j] = 0;
-                                yourInventory[j] = Database.itemList[0];
+                                yourInventory[j] = ItemDatabase.itemList[0];
 
                             }
                         }
@@ -866,7 +865,7 @@ public class Inventory : MonoBehaviour
 
                     for (int k = 0; k < slotsNumber; k++)
                     {
-                        if (yourInventory[k].id == Database.itemList[cookableItemId].n2 && b > 0)
+                        if (yourInventory[k].id == ItemDatabase.itemList[cookableItemId].n2 && b > 0)
                         {
                             if (slotStack[k] > b)
                             {
@@ -877,7 +876,7 @@ public class Inventory : MonoBehaviour
                             {
                                 b -= slotStack[k];
                                 slotStack[k] = 0;
-                                yourInventory[k] = Database.itemList[0];
+                                yourInventory[k] = ItemDatabase.itemList[0];
 
                             }
                         }
@@ -897,7 +896,7 @@ public class Inventory : MonoBehaviour
         if (slotStack[b] ==1)
         {
             Player.Head += 5;
-            yourInventory[b] = Database.itemList[0];
+            yourInventory[b] = ItemDatabase.itemList[0];
             slotStack[b] = 0;
             uiControl.healSelect.SetActive(false);
             uiControl.Inventory.SetActive(true);
@@ -915,7 +914,7 @@ public class Inventory : MonoBehaviour
         {
             Debug.Log("consumefinish");
             Player.Body += 5;
-            yourInventory[b] = Database.itemList[0];
+            yourInventory[b] = ItemDatabase.itemList[0];
             slotStack[b] = 0;
             uiControl.healSelect.SetActive(false);
             uiControl.Inventory.SetActive(true);
@@ -938,7 +937,7 @@ public class Inventory : MonoBehaviour
         else
         {
             Player.Arm += 5;
-            yourInventory[b] = Database.itemList[0];
+            yourInventory[b] = ItemDatabase.itemList[0];
             slotStack[b] = 0;
             uiControl.healSelect.SetActive(false);
             uiControl.Inventory.SetActive(true);
@@ -954,7 +953,7 @@ public class Inventory : MonoBehaviour
         else
         {
             Player.Legs += 5;
-            yourInventory[b] = Database.itemList[0];
+            yourInventory[b] = ItemDatabase.itemList[0];
             slotStack[b] = 0;
             uiControl.healSelect.SetActive(false);
             uiControl.Inventory.SetActive(true);

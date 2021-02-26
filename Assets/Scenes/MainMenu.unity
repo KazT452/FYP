@@ -385,6 +385,8 @@ MonoBehaviour:
 
 
 
+
+
     Character and
     Animation'
   m_isRightToLeft: 0
@@ -455,12 +457,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 77.57574, w: -570.6247}
   m_textInfo:
     textComponent: {fileID: 134080041}
-    characterCount: 70
+    characterCount: 72
     spriteCount: 0
-    spaceCount: 32
+    spaceCount: 34
     wordCount: 6
     linkCount: 0
-    lineCount: 31
+    lineCount: 33
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1025,8 +1027,8 @@ MonoBehaviour:
     Mountain Tree Pack @ NatureManufacture
 
 
-    POLYGON -
-    Western Frontier Pack @ Synty Studios
+    POLYGON - Western
+    Frontier Pack @ Synty Studios
 
 
     Survival Animset Pro vol.2 @ Kubold
@@ -1045,6 +1047,8 @@ MonoBehaviour:
     Cooked
     Meat @ Google Image
 
+
+    Standard Assets @ Unity Technologies
 
 
     Mixamo.com
@@ -1118,12 +1122,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 48.374355, w: -585.7502}
   m_textInfo:
     textComponent: {fileID: 1015203390}
-    characterCount: 325
+    characterCount: 354
     spriteCount: 0
-    spaceCount: 60
-    wordCount: 44
+    spaceCount: 65
+    wordCount: 48
     linkCount: 0
-    lineCount: 30
+    lineCount: 32
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0

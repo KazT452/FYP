@@ -100,6 +100,7 @@ public class UIController : MonoBehaviour
         if (!craftingisClosed || !inventoryClosed||!cookingisClosed||!questisClosed|| pauseGame||player.Dead||startDialog.activeSelf)
         {
             FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = false;
+            player.gameObject.GetComponent<Player>().enabled = false;
             Cursor.lockState = CursorLockMode.None;
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
@@ -107,6 +108,7 @@ public class UIController : MonoBehaviour
         else
         {
             FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = true;
+            player.gameObject.GetComponent<Player>().enabled = true;
         }
     }
 

@@ -49,45 +49,49 @@ public class QuestManager : MonoBehaviour
     {
         if (!ui.questisClosed)
         {
-            for (int i = 1; i < totalQuest+1; i++)
+            for (int i = 0; i < totalQuest; i++)
             {
 
-                if (QuestDatabase.questList[i].complete == false && !QuestDatabase.questList[i].active)
+                if (QuestDatabase.questList[i+1].complete == false && !QuestDatabase.questList[i+1].active)
                 {
-                    availableQuests[i - 1].gameObject.SetActive(true);
+                    availableQuests[i].gameObject.SetActive(true);
                 }
-                else if (QuestDatabase.questList[i].complete == false && QuestDatabase.questList[i].active)
+                else if (QuestDatabase.questList[i+1].complete == false && QuestDatabase.questList[i+1].active)
                 {
-                    availableQuests[i - 1].gameObject.SetActive(false);
+                    availableQuests[i].gameObject.SetActive(false);
                 }
-                else if (QuestDatabase.questList[i].complete == true && QuestDatabase.questList[i].repeatable == false && !QuestDatabase.questList[i].active)
+                else if (QuestDatabase.questList[i+1].complete == true && QuestDatabase.questList[i+1].repeatable == false && !QuestDatabase.questList[i+1].active)
                 {
-                    availableQuests[i - 1].gameObject.SetActive(false);
+                    availableQuests[i].gameObject.SetActive(false);
                 }
-                else if (QuestDatabase.questList[i].complete == true && QuestDatabase.questList[i].repeatable == false && QuestDatabase.questList[i].active)
+                else if (QuestDatabase.questList[i+1].complete == true && QuestDatabase.questList[i+1].repeatable == false && QuestDatabase.questList[i+1].active)
                 {
-                    availableQuests[i - 1].gameObject.SetActive(false);
+                    availableQuests[i].gameObject.SetActive(false);
                 }
-                else if (QuestDatabase.questList[i].complete == true)
+                else if(QuestDatabase.questList[i + 1].complete == true && QuestDatabase.questList[i + 1].repeatable == true && !QuestDatabase.questList[i + 1].active)
                 {
-                    availableQuests[i - 1].gameObject.SetActive(false);
+                    availableQuests[i].gameObject.SetActive(true);
+                }
+                else if (QuestDatabase.questList[i+1].complete == true)
+                {
+                    availableQuests[i].gameObject.SetActive(false);
                 }
 
-                if (QuestDatabase.questList[i].complete == false && QuestDatabase.questList[i].active)
+                if (QuestDatabase.questList[i+1].complete == false && QuestDatabase.questList[i+1].active)
                 {
-                    activeQuests[i - 1].gameObject.SetActive(true);
+                    activeQuests[i].gameObject.SetActive(true);
                 }
-                else if (QuestDatabase.questList[i].complete == false && QuestDatabase.questList[i].active)
+                else if (QuestDatabase.questList[i+1].complete == false && QuestDatabase.questList[i+1].active)
                 {
-                    activeQuests[i - 1].gameObject.SetActive(true);
+                    activeQuests[i].gameObject.SetActive(true);
                 }
-                else if (QuestDatabase.questList[i].complete == false && !QuestDatabase.questList[i].active)
+                else if (QuestDatabase.questList[i+1].complete == false && !QuestDatabase.questList[i+1].active)
                 {
-                    activeQuests[i - 1].gameObject.SetActive(false);
+                    activeQuests[i].gameObject.SetActive(false);
                 }
-                else if (QuestDatabase.questList[i].complete == true && !QuestDatabase.questList[i].active)
+                else if (QuestDatabase.questList[i+1].complete == true && !QuestDatabase.questList[i+1].active)
                 {
-                    activeQuests[i - 1].gameObject.SetActive(false);
+                    activeQuests[i].gameObject.SetActive(false);
                 }
             }
         }        
@@ -361,6 +365,7 @@ public class QuestManager : MonoBehaviour
                 
             }
             QuestDatabase.questList[activeQid].complete = true;
+            QuestDatabase.questList[activeQid].active = false;
             activeQuests[activeQid - 1].gameObject.SetActive(false);
             activeQid = 0;
             if (QuestDatabase.questList[activeQid].repeatable)

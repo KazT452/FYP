@@ -429,6 +429,7 @@ public class Player : MonoBehaviour
 
     public void Revive()
     {
+        daysManager.diedText.SetActive(false);
         daysManager.reviveBtn.SetActive(false);
         StartCoroutine(daysManager.WakeUp(false));
         Head = 20;

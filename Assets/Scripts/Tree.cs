@@ -37,7 +37,6 @@ public class Tree : MonoBehaviour
     public void Chop()
     {
         int drop;
-        Debug.Log(Player.unarm);
         if(Player.Arm >= 15)
         {
             if (Player.attack && Player.unarm)

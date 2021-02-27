@@ -9,7 +9,7 @@ public class DayNightSystem : MonoBehaviour
     public DaysManager daysManager;
     public Player player;
     [SerializeField] private Light sun;
-    [SerializeField] private float secondsInFullDay = 120f;
+    [SerializeField] private float secondsInFullDay;
 
     [Range(0, 1)] public float currentTimeofDay = 0;
     private float timeMultiplier = 1f;

@@ -81,18 +81,6 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        yourInventory[0] = ItemDatabase.itemList[1];
-        slotStack[0] += 5;
-        yourInventory[1] = ItemDatabase.itemList[1];
-        slotStack[1] += 5;
-        yourInventory[2] = ItemDatabase.itemList[1];
-        slotStack[2] += 5;
-        yourInventory[3] = ItemDatabase.itemList[1];
-        slotStack[3] += 5;
-        yourInventory[4] = ItemDatabase.itemList[1];
-        slotStack[4] += 5;
-        yourInventory[5] = ItemDatabase.itemList[1];
-        slotStack[5] += 5;
         player = transform.GetComponent<Player>();
         //Cooking items in database
         firstCookableItemId = 5;

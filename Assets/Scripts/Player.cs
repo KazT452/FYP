@@ -260,6 +260,7 @@ public class Player : MonoBehaviour
         }
         else if (enterSave)
         {
+            revivePoint = transform.position;
             if (dnSystem.currentTimeofDay <= 0.95f && dnSystem.currentTimeofDay >= 0.75f)
             {
                 msgBox.SetActive(true);

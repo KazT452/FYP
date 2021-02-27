@@ -280,7 +280,7 @@ public class Player : MonoBehaviour
         {
             msgBox.SetActive(false);
             msgBoxText.text = " ";
-        }               
+        }
     }
 
     public void UpdateSlider()

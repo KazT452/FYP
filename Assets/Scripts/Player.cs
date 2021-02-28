@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
     public GameObject Tutorial;
     public bool tired = false;
     public Animator statAnim;
+    public GameObject statTxt;
 
     // Start is called before the first frame update
     void Start()
@@ -80,7 +81,7 @@ public class Player : MonoBehaviour
     {
         UpdateSlider();
         HealthPenalty();
-        if (Health <= 0)
+        if (Health <= 0||Head<=0)
         {
             Die();
         }
@@ -158,12 +159,6 @@ public class Player : MonoBehaviour
             Body -= (Time.deltaTime / HealthDecreaseRate * 2);
             bodySlider.value -= (int)(Time.deltaTime / HealthDecreaseRate * 2);
         }
-        
-        if (healthSlider.value <= 0||Head<=0)
-        {
-            Die();
-        }
-
         
         //Hunger Controller
         if (Hunger>= 0)
@@ -356,6 +351,7 @@ public class Player : MonoBehaviour
             if (Hunger > maxHunger)
             {
                 tired = false;
+                statTxt.GetComponent<TextMeshProUGUI>().faceColor=new Color32(255,0,0,0);
             }
         }
         else
@@ -437,6 +433,7 @@ public class Player : MonoBehaviour
         Arm = 30;
         Legs = 30;
         Hunger = maxHunger;
+        Stamina = maxStamina;
     }
 
 

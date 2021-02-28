@@ -29,15 +29,6 @@ public class DayNightSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L)&&Input.GetKeyDown(KeyCode.RightShift))
-        {
-            currentTimeofDay = 0.74f;
-        }
-        if (Input.GetKeyDown(KeyCode.M)&&Input.GetKeyDown(KeyCode.RightShift))
-        {
-            QuestDatabase.questList[1].complete = true;
-            Debug.Log("COMPETE");
-        }
 
         UpdateSun();
 

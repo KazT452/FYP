@@ -37,7 +37,6 @@ public class DaysManager : MonoBehaviour
             player.revivePoint = player.transform.position;
             itemRespawner.TreeRockRespawn();
             itemRespawner.HerbSpawn();
-            Debug.Log(sleep);
             sleep = false;
             if (alive)
             {

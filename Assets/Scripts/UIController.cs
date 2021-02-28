@@ -108,7 +108,6 @@ public class UIController : MonoBehaviour
         }
         else
         {
-            Debug.Log("??");
             FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = true;
             player.gameObject.GetComponent<Player>().enabled = true;
             Cursor.visible = false;

@@ -29,16 +29,6 @@ public class ItemRespawner : MonoBehaviour
         {
             boudler_positions.Add(boulder.transform.position);
         }
-        //GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
-        //foreach (GameObject tree in trees)
-        //{
-        //    tree_Positions.Add(tree.transform.position);
-        //}
-        //foreach(TreeInstance newtree in terrain.treeInstances)
-        //{
-        //    List<TreeInstance> newTrees = new List<TreeInstance>(0);
-        //    terrain.treeInstances = newTrees.ToArray();
-        //}
         foreach (Vector3 treepos in tree_Positions)
         {
             Instantiate(tree, treepos, Quaternion.identity);

@@ -159,6 +159,13 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < slotsNumber; i++)
         {
+            slot[i].sprite = slotSprite[i];
+            slotSprite[i] = yourInventory[i].itemSprite;
+
+        }
+
+        for (int i = 0; i < slotsNumber; i++)
+        {
             if (yourInventory[i].id == 6)
             {
                 qSlot[0].sprite = yourInventory[i].itemSprite;
@@ -182,12 +189,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < slotsNumber; i++)
-        {
-            slot[i].sprite = slotSprite[i];
-            slotSprite[i] = yourInventory[i].itemSprite;
-
-        }
+        
 
         if (PickUp.y != null)
         {
@@ -286,16 +288,13 @@ public class Inventory : MonoBehaviour
 						Player.Hunger += 25;
 					}
 				}			
-			}
-            
-            
+			}            
         }
         else if (canConsume && canHeal && Input.GetButtonDown("Fire1"))
         {
             Debug.Log("HEAL");
             uiControl.Inventory.SetActive(true);
             uiControl.healSelect.SetActive(true);
-
         }
 
         for (int i = 0; i < slotsNumber; i++)
@@ -393,13 +392,6 @@ public class Inventory : MonoBehaviour
                 cookB += slotStack[i];
             }
         }
-
-
-
-
-
-
-
 
         if (cookA >= ItemDatabase.itemList[cookableItemId].q1 && cookB >= ItemDatabase.itemList[cookableItemId].q2)
         {
@@ -530,13 +522,6 @@ public class Inventory : MonoBehaviour
                 c += slotStack[i];
             }
         }
-
-
-
-
-
-
-
         if (a >= ItemDatabase.itemList[craftableItemId].q1 && b >= ItemDatabase.itemList[craftableItemId].q2 && c >= ItemDatabase.itemList[craftableItemId].q3)
         {
             craft = true;
@@ -545,11 +530,6 @@ public class Inventory : MonoBehaviour
         {
             craft = false;
         }
-
-
-
-
-
         if (craft == true)
         {
             a = ItemDatabase.itemList[craftableItemId].q1;
@@ -627,21 +607,11 @@ public class Inventory : MonoBehaviour
 
                             }
                         }
-
-
                     }
-
                     craft = false;
 
                 }
             }
-
-
-
-
-
-
-
             for (int i = 0; i < slotsNumber; i++)
             {
                 if (yourInventory[i].id == 0 && craft == true)
@@ -708,10 +678,7 @@ public class Inventory : MonoBehaviour
 
                             }
                         }
-
-
                     }
-
                     craft = false;
                 }
             }
@@ -740,13 +707,6 @@ public class Inventory : MonoBehaviour
             }
         }
 
-
-
-
-
-
-
-
         if (a >= ItemDatabase.itemList[cookableItemId].q1 && b >= ItemDatabase.itemList[cookableItemId].q2)
         {
             Debug.Log("cancook");
@@ -758,10 +718,6 @@ public class Inventory : MonoBehaviour
             cook = false;
             cookBtn.SetActive(false);
         }
-
-
-
-
 
         if (cook == true)
         {
@@ -826,12 +782,6 @@ public class Inventory : MonoBehaviour
 
                 }
             }
-
-
-
-
-
-
 
             for (int i = 0; i < slotsNumber; i++)
             {

@@ -132,7 +132,7 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        if (Stamina > 1)
+        if (Stamina > 1 && Arm>0)
         {
             if (!attack)
             {
@@ -158,6 +158,22 @@ public class Player : MonoBehaviour
         {
             Body -= (Time.deltaTime / HealthDecreaseRate * 2);
             bodySlider.value -= (int)(Time.deltaTime / HealthDecreaseRate * 2);
+        }
+        if (Head <= 0)
+        {
+            Head = 0;
+        }
+        if (Body <= 0)
+        {
+            Body = 0;
+        }
+        if (Arm <= 0)
+        {
+            Arm = 0;
+        }
+        if (Legs <= 0)
+        {
+            Legs = 0;
         }
         
         //Hunger Controller

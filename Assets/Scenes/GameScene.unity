@@ -34635,6 +34635,16 @@ PrefabInstance:
       propertyPath: statTxt
       value: 
       objectReference: {fileID: 1165795403}
+    - target: {fileID: 4317153693757848261, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
+        type: 3}
+      propertyPath: maxStamina
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4317153693757848261, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
+        type: 3}
+      propertyPath: Stamina
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4317153693757848266, guid: 928a0ac2f6681dc4e92dd0d48aed04e1,
         type: 3}
       propertyPath: uiControl

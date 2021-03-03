@@ -159,13 +159,6 @@ public class QuestManager : MonoBehaviour
                     break;
                 }
             }
-
-
-
-
-
-
-
             if (a >= QuestDatabase.questList[activeQid].q1 && b >= QuestDatabase.questList[activeQid].q2 && c >= QuestDatabase.questList[activeQid].q3)
             {
                 Debug.Log("questcom");
@@ -239,9 +232,7 @@ public class QuestManager : MonoBehaviour
 
                             }
                         }
-
                     }
-
                     for (int k = 0; k < inventory.slotsNumber; k++)
                     {
                         if (inventory.yourInventory[k].id == QuestDatabase.questList[activeQid].n2 && totalB > 0)
@@ -259,9 +250,7 @@ public class QuestManager : MonoBehaviour
 
                             }
                         }
-
                     }
-
                     for (int l = 0; l < inventory.slotsNumber; l++)
                     {
                         if (inventory.yourInventory[l].id == QuestDatabase.questList[activeQid].n3 && totalC > 0)
@@ -279,15 +268,10 @@ public class QuestManager : MonoBehaviour
 
                             }
                         }
-
-
                     }
-
                     complete = false;
-
                 }
             }
-
             for (int i = 0; i < inventory.slotsNumber; i++)
             {
                 if (inventory.yourInventory[i].id == 0 && complete == true)
@@ -313,9 +297,7 @@ public class QuestManager : MonoBehaviour
 
                             }
                         }
-
                     }
-
                     for (int k = 0; k < inventory.slotsNumber; k++)
                     {
                         if (inventory.yourInventory[k].id == QuestDatabase.questList[activeQid].n2 && totalB > 0)
@@ -333,10 +315,7 @@ public class QuestManager : MonoBehaviour
 
                             }
                         }
-
-
                     }
-
                     for (int l = 0; l < inventory.slotsNumber; l++)
                     {
                         if (inventory.yourInventory[l].id == QuestDatabase.questList[activeQid].n3 && totalC > 0)
@@ -354,15 +333,9 @@ public class QuestManager : MonoBehaviour
 
                             }
                         }
-
-
-                    }
-                    
-
-
+                    }          
                     complete = false;
-                }
-                
+                }                
             }
             QuestDatabase.questList[activeQid].complete = true;
             QuestDatabase.questList[activeQid].active = false;

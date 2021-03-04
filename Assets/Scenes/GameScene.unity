@@ -11021,8 +11021,8 @@ MonoBehaviour:
   daysManager: {fileID: 1602378862}
   player: {fileID: 1451111572}
   sun: {fileID: 705507994}
-  secondsInFullDay: 360
-  currentTimeofDay: 0.713
+  secondsInFullDay: 500
+  currentTimeofDay: 0
   NightTeller: {fileID: 677053254}
 --- !u!1001 &707885157
 PrefabInstance:

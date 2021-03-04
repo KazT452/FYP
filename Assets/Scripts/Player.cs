@@ -115,43 +115,46 @@ public class Player : MonoBehaviour
             anim.SetBool("isGrounded", true);
         }
 
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("wp_Attk") || anim.GetCurrentAnimatorStateInfo(0).IsName("hd_Attk"))
+        if (FPS.isActiveAndEnabled)
         {
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("wp_Attk"))
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("wp_Attk") || anim.GetCurrentAnimatorStateInfo(0).IsName("hd_Attk"))
             {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >=0.5)
+                if (anim.GetCurrentAnimatorStateInfo(0).IsName("wp_Attk"))
                 {
-                    attack = false;
+                    if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5)
+                    {
+                        attack = false;
+                    }
+                }
+                else if (anim.GetCurrentAnimatorStateInfo(0).IsName("hd_Attk"))
+                {
+                    if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5)
+                    {
+                        attack = false;
+                    }
                 }
             }
-            else if (anim.GetCurrentAnimatorStateInfo(0).IsName("hd_Attk"))
+            if (Stamina > 1 && Arm > 0)
             {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5)
+                if (!attack)
                 {
-                    attack = false;
-                }
-            }
-        }
-        if (Stamina > 1 && Arm>0)
-        {
-            if (!attack)
-            {
-                if (Input.GetButtonDown("Fire1") && !anim.GetBool("Unarm"))
-                {
-                    anim.Play("wp_Attk");
-                    Stamina -= 2f*StaminaDecrease;
-                    attack = true;
+                    if (Input.GetButtonDown("Fire1") && !anim.GetBool("Unarm"))
+                    {
+                        anim.Play("wp_Attk");
+                        Stamina -= 2f * StaminaDecrease;
+                        attack = true;
+
+                    }
+                    else if (Input.GetButtonDown("Fire1") && anim.GetBool("Unarm"))
+                    {
+                        anim.Play("hd_Attk");
+                        Stamina -= 1.5f * StaminaDecrease;
+                        attack = true;
+                    }
 
                 }
-                else if (Input.GetButtonDown("Fire1") && anim.GetBool("Unarm"))
-                {
-                    anim.Play("hd_Attk");
-                    Stamina -= 1.5f*StaminaDecrease;
-                    attack = true;
-                }
-
             }
-        }         
+        }               
         
         //Health Controller
         if (hungerSlider.value <= 0)
@@ -194,36 +197,40 @@ public class Player : MonoBehaviour
         }
 
         //Stamina Controller
-        if (!FPS.m_IsWalking&& FPS.m_Input!=Vector2.zero)
+        if (uiControl.inventoryClosed&&uiControl.craftingisClosed &&uiControl.cookingisClosed)
         {
-            if (Stamina >= 0)
+            if (!FPS.m_IsWalking && FPS.m_Input != Vector2.zero)
             {
-                staminaSlider.value -= (Time.deltaTime / StaminaDecrease);
-                Stamina -= (Time.deltaTime / StaminaDecrease);
-            }
-            else if (Stamina <= 0)
-            {
-                staminaSlider.value = 0;
-                Stamina = 0;
-                if (Legs >= 0)
+                if (Stamina >= 0)
                 {
-                    legSlider.value -= Time.deltaTime / HealthDecreaseRate;
-                    Legs -= 1;
+                    staminaSlider.value -= (Time.deltaTime / StaminaDecrease);
+                    Stamina -= (Time.deltaTime / StaminaDecrease);
                 }
-                else
+                else if (Stamina <= 0)
                 {
-                    Legs = 0;
+                    staminaSlider.value = 0;
+                    Stamina = 0;
+                    if (Legs >= 0)
+                    {
+                        legSlider.value -= Time.deltaTime / HealthDecreaseRate;
+                        Legs -= 1;
+                    }
+                    else
+                    {
+                        Legs = 0;
+                    }
+
                 }
-                             
+                else if (Stamina >= maxStamina)
+                {
+                    staminaSlider.value = maxStamina;
+                    Stamina = maxStamina;
+                }
             }
-            else if (Stamina >= maxStamina)
-            {
-                staminaSlider.value = maxStamina;
-                Stamina = maxStamina;
-            }
-        }
-        else if (FPS.m_IsWalking && Stamina<=maxStamina)
+        }        
+        else if (FPS.m_IsWalking && Stamina<=maxStamina||!FPS.isActiveAndEnabled&& Stamina <= maxStamina)
         {
+            Debug.Log(FPS.m_IsWalking);
             staminaSlider.value += (Time.deltaTime / StaminaDecrease);
             Stamina += (Time.deltaTime / StaminaDecrease);
         }
@@ -343,6 +350,7 @@ public class Player : MonoBehaviour
         {
             FPS.m_RunSpeed = 8;
             FPS.m_WalkSpeed =4;
+            hpPenaltyBox.text = " ";
         }
         else if (Legs <= 0)
         {

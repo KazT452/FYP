@@ -45,6 +45,7 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (!pauseGame)
         {
             if (Input.GetKeyDown(KeyCode.Tab))
@@ -101,7 +102,7 @@ public class UIController : MonoBehaviour
         if (!craftingisClosed || !inventoryClosed||!cookingisClosed||!questisClosed|| pauseGame||player.Dead||startDialog.activeSelf)
         {
             FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = false;
-            player.gameObject.GetComponent<Player>().enabled = false;
+            //player.gameObject.GetComponent<Player>().enabled = false;
             Cursor.lockState = CursorLockMode.None;
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;

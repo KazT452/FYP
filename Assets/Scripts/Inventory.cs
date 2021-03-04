@@ -99,12 +99,17 @@ public class Inventory : MonoBehaviour
         {
             if (qSlot[0].sprite != ItemDatabase.itemList[0].itemSprite)
             {
-                if (!pCombat.Axe.activeSelf)
+                if (pCombat.Pickaxe.activeSelf)
+                {
+                    pCombat.Pickaxe.SetActive(false);
+                    pCombat.Axe.SetActive(true);
+                }
+                else if (!pCombat.Axe.activeSelf)
                 {
                     Player.unarm = false;
                     pCombat.Axe.SetActive(true);
                 }
-                else
+                else if(pCombat.Axe.activeSelf)
                 {
                     Player.unarm = true;
                     pCombat.Axe.SetActive(false);
@@ -115,7 +120,12 @@ public class Inventory : MonoBehaviour
         {
             if (qSlot[1].sprite != ItemDatabase.itemList[0].itemSprite)
             {
-                if (!pCombat.Pickaxe.activeSelf)
+                if (pCombat.Axe.activeSelf)
+                {
+                    pCombat.Axe.SetActive(false);
+                    pCombat.Pickaxe.SetActive(true);
+                }
+                else if (!pCombat.Pickaxe.activeSelf)
                 {
                     Player.unarm = false;
                     pCombat.Pickaxe.SetActive(true);
@@ -235,67 +245,70 @@ public class Inventory : MonoBehaviour
             PickUp.pick = false;
         }
         //Comsumable
-        if (yourInventory[b].consumable == true)
+        if (!uiControl.inventoryClosed)
         {
-            canConsume = true;
-        }
-        else
-        {
-            canConsume = false;
-        }
+            if (yourInventory[b].consumable == true)
+            {
+                canConsume = true;
+            }
+            else
+            {
+                canConsume = false;
+            }
 
-        if (yourInventory[b].healing)
-        {
-            canHeal = true;
-        }
-        else
-        {
-            canHeal = false;
-        }		
-		
-        if (!canHeal && canConsume && Input.GetButtonDown("Fire1"))
-        {
-            Debug.Log("EAT");
-			if(Player.Hunger< player.maxHunger)
-			{
-				if (yourInventory[b] == ItemDatabase.itemList[4])
-				{
-					if (slotStack[b] == 1)
-					{
-						Player.Body -= 3;
-						Player.Hunger += 25;
-						yourInventory[b] = ItemDatabase.itemList[0];
-						slotStack[b] = 0;
-					}
-					else
-					{
-						slotStack[b]--;
-						Player.Body -= 3;
-						Player.Hunger += 25;
-					}
-				}
-				else if (yourInventory[b] == ItemDatabase.itemList[5])
-				{
-					if (slotStack[b] == 1)
-					{
-						Player.Hunger += 25;
-						yourInventory[b] = ItemDatabase.itemList[0];
-						slotStack[b] = 0;
-					}
-					else
-					{
-						slotStack[b]--;
-						Player.Hunger += 25;
-					}
-				}			
-			}            
-        }
-        else if (canConsume && canHeal && Input.GetButtonDown("Fire1"))
-        {
-            Debug.Log("HEAL");
-            uiControl.Inventory.SetActive(true);
-            uiControl.healSelect.SetActive(true);
-        }
+            if (yourInventory[b].healing)
+            {
+                canHeal = true;
+            }
+            else
+            {
+                canHeal = false;
+            }
+
+            if (!canHeal && canConsume && Input.GetButtonDown("Fire1"))
+            {
+                Debug.Log("EAT");
+                if (Player.Hunger < player.maxHunger)
+                {
+                    if (yourInventory[b] == ItemDatabase.itemList[4])
+                    {
+                        if (slotStack[b] == 1)
+                        {
+                            Player.Body -= 3;
+                            Player.Hunger += 25;
+                            yourInventory[b] = ItemDatabase.itemList[0];
+                            slotStack[b] = 0;
+                        }
+                        else
+                        {
+                            slotStack[b]--;
+                            Player.Body -= 3;
+                            Player.Hunger += 25;
+                        }
+                    }
+                    else if (yourInventory[b] == ItemDatabase.itemList[5])
+                    {
+                        if (slotStack[b] == 1)
+                        {
+                            Player.Hunger += 25;
+                            yourInventory[b] = ItemDatabase.itemList[0];
+                            slotStack[b] = 0;
+                        }
+                        else
+                        {
+                            slotStack[b]--;
+                            Player.Hunger += 25;
+                        }
+                    }
+                }
+            }
+            else if (canConsume && canHeal && Input.GetButtonDown("Fire1"))
+            {
+                Debug.Log("HEAL");
+                uiControl.Inventory.SetActive(true);
+                uiControl.healSelect.SetActive(true);
+            }
+        }      
 
         for (int i = 0; i < slotsNumber; i++)
         {
@@ -855,6 +868,7 @@ public class Inventory : MonoBehaviour
             slotStack[b]--;
             Player.Head += 5;
         }
+        player.UpdateSlider();
     }
     public void HealBody()
     {
@@ -874,6 +888,7 @@ public class Inventory : MonoBehaviour
             slotStack[b]--;
             Player.Body += 5;
         }
+        player.UpdateSlider();
     }
     public void HealArm()
     {
@@ -890,6 +905,7 @@ public class Inventory : MonoBehaviour
             uiControl.healSelect.SetActive(false);
             uiControl.Inventory.SetActive(true);
         }
+        player.UpdateSlider();
     }
     public void HealLeg()
     {
@@ -906,6 +922,7 @@ public class Inventory : MonoBehaviour
             uiControl.healSelect.SetActive(false);
             uiControl.Inventory.SetActive(true);
         }
+        player.UpdateSlider();
     }
 
     public void CancelHeal()

@@ -197,40 +197,37 @@ public class Player : MonoBehaviour
         }
 
         //Stamina Controller
-        if (uiControl.inventoryClosed&&uiControl.craftingisClosed &&uiControl.cookingisClosed)
-        {
-            if (!FPS.m_IsWalking && FPS.m_Input != Vector2.zero)
-            {
-                if (Stamina >= 0)
-                {
-                    staminaSlider.value -= (Time.deltaTime / StaminaDecrease);
-                    Stamina -= (Time.deltaTime / StaminaDecrease);
-                }
-                else if (Stamina <= 0)
-                {
-                    staminaSlider.value = 0;
-                    Stamina = 0;
-                    if (Legs >= 0)
-                    {
-                        legSlider.value -= Time.deltaTime / HealthDecreaseRate;
-                        Legs -= 1;
-                    }
-                    else
-                    {
-                        Legs = 0;
-                    }
 
-                }
-                else if (Stamina >= maxStamina)
-                {
-                    staminaSlider.value = maxStamina;
-                    Stamina = maxStamina;
-                }
+        if (!FPS.m_IsWalking && FPS.m_Input != Vector2.zero)
+        {
+            if (Stamina >= 0)
+            {
+                staminaSlider.value -= (Time.deltaTime / StaminaDecrease);
+                Stamina -= (Time.deltaTime / StaminaDecrease);
             }
-        }        
+            else if (Stamina <= 0)
+            {
+                staminaSlider.value = 0;
+                Stamina = 0;
+                if (Legs >= 0)
+                {
+                    legSlider.value -= Time.deltaTime / HealthDecreaseRate;
+                    Legs -= 1;
+                }
+                else
+                {
+                    Legs = 0;
+                }
+
+            }
+            else if (Stamina >= maxStamina)
+            {
+                staminaSlider.value = maxStamina;
+                Stamina = maxStamina;
+            }
+        }               
         else if (FPS.m_IsWalking && Stamina<=maxStamina||!FPS.isActiveAndEnabled&& Stamina <= maxStamina)
         {
-            Debug.Log(FPS.m_IsWalking);
             staminaSlider.value += (Time.deltaTime / StaminaDecrease);
             Stamina += (Time.deltaTime / StaminaDecrease);
         }
@@ -242,6 +239,7 @@ public class Player : MonoBehaviour
             msgBoxText.text = "Press E to Cook";
             if (Input.GetKeyDown(KeyCode.E))
             {
+                FPS.m_Input = Vector2.zero;
                 if (uiControl.cookingisClosed)
                 {
                     uiControl.Cooking.SetActive(true);
@@ -255,6 +253,7 @@ public class Player : MonoBehaviour
             msgBoxText.text = "Press E to Craft";
             if (Input.GetKeyDown(KeyCode.E))
             {
+                FPS.m_Input = Vector2.zero;
                 if (uiControl.craftingisClosed)
                 {
                     uiControl.Crafting.SetActive(true);
@@ -269,6 +268,7 @@ public class Player : MonoBehaviour
             msgBoxText.text = "Press E to access Quest";
             if (Input.GetKeyDown(KeyCode.E))
             {
+                FPS.m_Input = Vector2.zero;
                 if (uiControl.questisClosed)
                 {
                     uiControl.Quest.SetActive(true);

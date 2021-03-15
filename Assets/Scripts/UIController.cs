@@ -50,6 +50,7 @@ public class UIController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Tab))
             {
+                FPS.m_Input = Vector2.zero;
                 if (inventoryClosed)
                 {
                     Inventory.SetActive(true);
